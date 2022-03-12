@@ -136,7 +136,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10rem;
+    margin-top: 5rem;
 }
 
 .sign-in-button {
@@ -178,4 +178,25 @@ body {
 .card-icon {
     height: 64px;
     margin-right: 0.5rem;
+}
+
+.helper-text-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.helper-header {
+    font-size: 1.25rem;
+}
+
+.helper-link {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+    color: var(--button-blue);
+    text-decoration: underline;
+}
+
+.helper-link {
+    cursor: pointer;
 }

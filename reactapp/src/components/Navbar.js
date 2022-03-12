@@ -4,6 +4,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 
 const Navbar = () => {
+    const { isSignedIn, setIsSignedIn } = useContext(AppContext);
+
     // History variable is used to update the path of the site
     const history = useHistory();
     const location = useLocation();
@@ -13,7 +15,10 @@ const Navbar = () => {
         history.push(route);
     };
 
-    const { isSignedIn, setIsSignedIn } = useContext(AppContext);
+    // Sign out user
+    const handleSignOutClick = () => {
+        setIsSignedIn(false);
+    };
 
     return (
         <div className='navbar-container'>
@@ -28,8 +33,23 @@ const Navbar = () => {
                         <span className='navbar-header'>ProjectName</span>
                     </div>
                     <div className='navbar-links-container'>
-                        <div className={location.pathname === '/user/home' ? 'navbar-link-clicked' : 'navbar-link'}>Home</div>
-                        <div className={location.pathname === '/user/profile' ? 'navbar-link-clicked' : 'navbar-link'}>Profile</div>
+                        <div
+                            onClick={() => {
+                                handleNavbarClick('/user/home');
+                            }}
+                            className={location.pathname === '/user/home' ? 'navbar-link-clicked' : 'navbar-link'}>
+                            Home
+                        </div>
+                        <div
+                            onClick={() => {
+                                handleNavbarClick('/user/profile');
+                            }}
+                            className={location.pathname === '/user/profile' ? 'navbar-link-clicked' : 'navbar-link'}>
+                            Profile
+                        </div>
+                        <div onClick={handleSignOutClick} className='navbar-link'>
+                            Sign Out
+                        </div>
                     </div>
                 </>
             ) : (

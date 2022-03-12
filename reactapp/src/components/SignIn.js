@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import Icon from '../images/barbell.png';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -10,7 +11,12 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 
+import AppContext from '../context/AppContext';
+
 const SignIn = () => {
+    const history = useHistory();
+    const { setIsSignedIn } = useContext(AppContext);
+
     const [values, setValues] = React.useState({
         username: '',
         password: '',
@@ -35,7 +41,12 @@ const SignIn = () => {
     let validForm = values.username === '' || values.password === '' ? false : true;
 
     const handleSignInClick = () => {
-        console.log('Sign In Clicked');
+        setIsSignedIn(true);
+        history.push('/user/home');
+    };
+
+    const handleGoToSignUpClick = () => {
+        history.push('/signup');
     };
 
     return (
@@ -72,7 +83,6 @@ const SignIn = () => {
                 <Button
                     disabled={validForm ? false : true}
                     onClick={handleSignInClick}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSignInClick()}
                     style={{
                         textTransform: 'none',
                         borderRadius: '500px',
@@ -87,6 +97,15 @@ const SignIn = () => {
                     variant='contained'>
                     Sign In
                 </Button>
+
+                <hr style={{ width: '100%', margin: '2rem 0' }} />
+
+                <div className='helper-text-container'>
+                    <div className='helper-header'>Don't have an account?</div>
+                    <div onClick={handleGoToSignUpClick} className='helper-link'>
+                        Sign Up
+                    </div>
+                </div>
             </div>
         </div>
     );

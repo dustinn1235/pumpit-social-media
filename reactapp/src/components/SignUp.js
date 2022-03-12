@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import Icon from '../images/barbell.png';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -10,7 +11,12 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 
+import AppContext from '../context/AppContext';
+
 const SignUp = () => {
+    const history = useHistory();
+    const { setIsSignedIn } = useContext(AppContext);
+
     const [values, setValues] = React.useState({
         username: '',
         password: '',
@@ -36,8 +42,15 @@ const SignUp = () => {
     let validForm = values.username === '' || values.password === '' ? false : true;
     let validPasswords = values.password === values.confirmpassword ? true : false;
 
-    const handleSignInClick = () => {
-        console.log('Sign In Clicked');
+    const handleSignUpClick = () => {
+        // TODO Send user info to DB
+        // values.username and values.password
+        setIsSignedIn(true);
+        history.push('/user/home');
+    };
+
+    const handleGoToSignInClick = () => {
+        history.push('/signin');
     };
 
     return (
@@ -91,8 +104,7 @@ const SignUp = () => {
 
                 <Button
                     disabled={validForm && validPasswords ? false : true}
-                    onClick={handleSignInClick}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSignInClick()}
+                    onClick={handleSignUpClick}
                     style={{
                         textTransform: 'none',
                         borderRadius: '500px',
@@ -107,6 +119,15 @@ const SignUp = () => {
                     variant='contained'>
                     Sign Up
                 </Button>
+
+                <hr style={{ width: '100%', margin: '2rem 0' }} />
+
+                <div className='helper-text-container'>
+                    <div className='helper-header'>Already have an account?</div>
+                    <div onClick={handleGoToSignInClick} className='helper-link'>
+                        Sign In
+                    </div>
+                </div>
             </div>
         </div>
     );
