@@ -15,7 +15,7 @@ import AppContext from '../context/AppContext';
 
 const SignIn = () => {
     const history = useHistory();
-    const { setIsSignedIn } = useContext(AppContext);
+    const { setIsSignedIn, user, setUser } = useContext(AppContext);
 
     const [values, setValues] = React.useState({
         username: '',
@@ -41,6 +41,9 @@ const SignIn = () => {
     let validForm = values.username === '' || values.password === '' ? false : true;
 
     const handleSignInClick = () => {
+        // TODO Validate form values
+        // values.username and values.password match an account in the DB
+        setUser({ ...user, username: values.username });
         setIsSignedIn(true);
         history.push('/user/home');
     };
