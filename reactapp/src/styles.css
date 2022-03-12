@@ -5,4 +5,58 @@ body {
     padding: 0;
     max-width: 100%;
     overflow-x: hidden;
+    font-family: 'Spartan-R';
+    min-height: 100vh;
+}
+
+/* Fonts */
+/* Spartan-ExtraLight */
+@font-face {
+    font-family: 'Spartan-L';
+    src: url('./fonts/LeagueSpartan-ExtraLight.ttf') format('truetype');
+}
+/* Spartan-Regular */
+@font-face {
+    font-family: 'Spartan-R';
+    src: url('./fonts/LeagueSpartan-Regular.ttf') format('truetype');
+}
+/* Spartan-SemiBold */
+@font-face {
+    font-family: 'Spartan-B';
+    src: url('./fonts/LeagueSpartan-Regular.ttf') format('truetype');
+}
+
+.navbar-container {
+    height: 64px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 10px 100px rgb(0 0 0 / 10%);
+    position: fixed;
+    width: 100vw;
+    z-index: 2;
+}
+
+.navbar-icon-header-container {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-links-container {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-icon {
+    height: 48px;
+    margin-right: 0.5rem;
+}
+
+.navbar-header {
+    font-size: 2rem;
+}
+
+.navbar-link {
+    font-size: 1.5rem;
+    margin: 0 1rem;
 }
