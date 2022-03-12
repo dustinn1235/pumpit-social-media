@@ -8,6 +8,12 @@ body {
     font-family: 'Spartan-R';
 }
 
+/* ========== Colors ========== */
+
+:root {
+    --button-blue: #0077b6;
+}
+
 /* Fonts */
 /* Spartan-ExtraLight */
 @font-face {
@@ -25,7 +31,7 @@ body {
     src: url('./fonts/LeagueSpartan-Regular.ttf') format('truetype');
 }
 
-/* ========== Styles ========== */
+/* ========== Navbar Styles ========== */
 
 .navbar-container {
     height: 64px;
@@ -60,4 +66,51 @@ body {
 .navbar-link {
     font-size: 1.5rem;
     margin: 0 1rem;
+    transition: 0.2s;
+}
+
+.navbar-link:hover {
+    color: var(--button-blue);
+    cursor: pointer;
+    margin-bottom: 0.25rem;
+}
+
+/* ========== Landing Page Styles ========== */
+
+.landing-page-container {
+    display: flex;
+    justify-content: center;
+    max-width: 65vw;
+    margin: 10rem auto 0 auto;
+}
+
+.landing-page-image {
+    height: 500px;
+    width: 500px;
+}
+
+.landing-page-header {
+    font-size: 6rem;
+    word-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.landing-page-subheader {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.landing-page-button {
+    border: none;
+    padding: 1.5rem 3rem;
+    border-radius: 500px;
+    font-size: 1.25rem;
+    font-family: 'Spartan-B';
+    transition: all 0.2s ease-in;
+}
+
+.landing-page-button:hover {
+    background-color: var(--button-blue);
+    color: white;
+    cursor: pointer;
 }
