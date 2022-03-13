@@ -9,6 +9,8 @@ const Posts = ({ id, username, image, date, description, comments }) => {
     const [like, setLike] = useState(false);
     const [viewComments, setViewComments] = useState(false);
     const [commentValue, setCommentValue] = useState('');
+    const [myComments, setMyComments] = useState([]);
+    const [showMyComments, setShowMyComments] = useState(false);
 
     const handleLikeClick = () => {
         if (like === false) {
@@ -21,6 +23,7 @@ const Posts = ({ id, username, image, date, description, comments }) => {
     const handlePostClick = () => {
         // TODO send to DB
         setCommentValue('');
+        setShowMyComments(true);
     };
 
     return (
@@ -68,6 +71,7 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                             )}
                         </>
                     )}
+                    {showMyComments ? <></> : null}
                 </div>
                 <div className='comment-input-container'>
                     <div style={{ display: 'flex' }}>
