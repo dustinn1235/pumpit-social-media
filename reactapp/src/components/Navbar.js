@@ -18,6 +18,7 @@ const Navbar = () => {
     // Sign out user
     const handleSignOutClick = () => {
         setIsSignedIn(false);
+        history.push('/');
     };
 
     return (
