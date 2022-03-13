@@ -3,6 +3,7 @@ import HeartFilled from '@mui/icons-material/Favorite';
 import HeartOutlined from '@mui/icons-material/FavoriteBorder';
 import Comment from '@mui/icons-material/ModeCommentOutlined';
 import Comments from './Comments';
+import Button from '@mui/material/Button';
 
 const Posts = ({ id, username, image, date, description, comments }) => {
     const [like, setLike] = useState(false);
@@ -15,6 +16,11 @@ const Posts = ({ id, username, image, date, description, comments }) => {
         } else {
             setLike(false);
         }
+    };
+
+    const handlePostClick = () => {
+        // TODO send to DB
+        setCommentValue('');
     };
 
     return (
@@ -64,7 +70,7 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                     )}
                 </div>
                 <div className='comment-input-container'>
-                    <div>
+                    <div style={{ display: 'flex' }}>
                         <Comment style={{ marginRight: '1rem' }} />
                         <input
                             className='comment-input'
@@ -75,7 +81,21 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                             }}
                         />
                     </div>
-                    <button>Post</button>
+                    <Button
+                        disabled={commentValue !== '' ? false : true}
+                        onClick={handlePostClick}
+                        style={{
+                            textTransform: 'none',
+                            borderRadius: '500px',
+                            padding: '0.25rem 0.5rem',
+                            backgroundColor: commentValue !== '' ? 'var(--button-blue)' : 'gray',
+                            color: commentValue !== '' ? 'white' : '#DCDCDC',
+                            fontFamily: 'Spartan-R',
+                            fontSize: '1rem',
+                        }}
+                        variant='contained'>
+                        Post
+                    </Button>
                 </div>
             </div>
         </div>
