@@ -2,6 +2,9 @@ import React, { useContext } from 'react';
 import Icon from '../images/barbell.png';
 import { useHistory, useLocation } from 'react-router-dom';
 import AppContext from '../context/AppContext';
+import Home from '@mui/icons-material/Home';
+import Profile from '@mui/icons-material/AccountCircle';
+import Goal from '@mui/icons-material/EmojiEvents';
 
 const Navbar = () => {
     const { isSignedIn, setIsSignedIn } = useContext(AppContext);
@@ -39,16 +42,23 @@ const Navbar = () => {
                                 handleNavbarClick('/user/home');
                             }}
                             className={location.pathname === '/user/home' ? 'navbar-link-clicked' : 'navbar-link'}>
-                            Home
+                            <Home fontSize={'large'} />
+                        </div>
+                        <div
+                            onClick={() => {
+                                handleNavbarClick('/user/workouts');
+                            }}
+                            className={location.pathname === '/user/workouts' ? 'navbar-link-clicked' : 'navbar-link'}>
+                            <Goal fontSize={'large'} />
                         </div>
                         <div
                             onClick={() => {
                                 handleNavbarClick('/user/profile');
                             }}
                             className={location.pathname === '/user/profile' ? 'navbar-link-clicked' : 'navbar-link'}>
-                            Profile
+                            <Profile fontSize={'large'} />
                         </div>
-                        <div onClick={handleSignOutClick} className='navbar-link'>
+                        <div style={{ marginLeft: '1rem', fontSize: '1.25rem' }} onClick={handleSignOutClick} className='navbar-link'>
                             Sign Out
                         </div>
                     </div>

@@ -72,14 +72,14 @@ body {
 
 .navbar-link {
     font-size: 1.5rem;
-    margin: 0 1rem;
+    margin: 0 0.5rem;
     transition: 0.2s;
 }
 
 .navbar-link-clicked {
     color: var(--button-blue);
     font-size: 1.5rem;
-    margin: 0 1rem;
+    margin: 0 0.5rem;
 }
 
 .navbar-link-clicked {
@@ -313,4 +313,13 @@ body {
     width: 250px;
     height: 250px;
     object-fit: cover;
+}
+
+/* ========== Page Not Found ========== */
+
+.page-not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8rem;
 }

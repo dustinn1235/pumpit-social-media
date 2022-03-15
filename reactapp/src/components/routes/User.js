@@ -7,6 +7,8 @@ const User = ({ children }) => {
 
     const HomeLazy = lazy(() => import('../user/Home'));
     const ProfileLazy = lazy(() => import('../user/Profile'));
+    const WorkoutsLazy = lazy(() => import('../user/Workouts'));
+    const PageNotFoundLazy = lazy(() => import('../PageNotFound'));
 
     return (
         <>
@@ -14,7 +16,9 @@ const User = ({ children }) => {
             <div>
                 <Switch>
                     <Route exact path={`${url}/home`} render={(props) => <HomeLazy {...props} />} />
+                    <Route exact path={`${url}/workouts`} render={(props) => <WorkoutsLazy {...props} />} />
                     <Route exact path={`${url}/profile`} render={(props) => <ProfileLazy {...props} />} />
+                    <Route render={(props) => <PageNotFoundLazy {...props} />} />
                 </Switch>
             </div>
         </>
