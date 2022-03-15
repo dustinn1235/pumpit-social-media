@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import AppContext from '../../context/AppContext';
 import HeartFilled from '@mui/icons-material/Favorite';
 import HeartOutlined from '@mui/icons-material/FavoriteBorder';
 import Comment from '@mui/icons-material/ModeCommentOutlined';
@@ -6,13 +7,53 @@ import Comments from './Comments';
 import Button from '@mui/material/Button';
 
 const Posts = ({ id, username, image, date, description, comments }) => {
+    const { user } = useContext(AppContext);
     const [like, setLike] = useState(false);
     const [viewComments, setViewComments] = useState(false);
     const [commentValue, setCommentValue] = useState('');
     const [myComments, setMyComments] = useState([]);
     const [showMyComments, setShowMyComments] = useState(false);
+    const [allComments, setAllComments] = useState(comments);
+
+    // useEffect(() => {
+    //     let likesFromLocalStorage = JSON.parse(window.localStorage.getItem('likes'));
+    //     console.log(likesFromLocalStorage);
+    //     if (likesFromLocalStorage !== null) {
+    //         if (likesFromLocalStorage.filter((e) => e.postId === id && e.username === user.username).length > 0) {
+    //             setLike(true);
+    //         }
+    //     } else {
+    //         window.localStorage.setItem(
+    //             'likes',
+    //             JSON.stringify([
+    //                 {
+    //                     postId: -1,
+    //                     username: '',
+    //                 },
+    //             ]),
+    //         );
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, []);
 
     const handleLikeClick = () => {
+        // Shows a red heart
+        // let likesFromLocalStorage = JSON.parse(window.localStorage.getItem('likes'));
+        // if (like === false) {
+        //     let filtered = likesFromLocalStorage.filter((e) => e.postId !== id && e.username !== user.username);
+        //     console.log('This is the like filtered: ', filtered);
+        //     filtered.push({
+        //         postId: id,
+        //         username: user.username,
+        //     });
+        //     window.localStorage.setItem('likes', JSON.stringify(filtered));
+        //     setLike(true);
+        // } else {
+        //     let filtered = likesFromLocalStorage.filter((e) => e.postId !== id && e.username !== user.username);
+        //     console.log('This is the unlike filtered: ', filtered);
+        //     window.localStorage.setItem('likes', JSON.stringify(filtered));
+        //     setLike(false);
+        // }
         if (like === false) {
             setLike(true);
         } else {
@@ -20,10 +61,23 @@ const Posts = ({ id, username, image, date, description, comments }) => {
         }
     };
 
+    const getAllComments = () => {
+        // TODO Make a call to the DB to get all comments that match the post id (id is passed as argument)
+        // setAllComments(responseFromDB)
+    };
+
     const handlePostClick = () => {
-        // TODO send to DB
-        setCommentValue('');
+        // TODO send post information to DB (username, comment)
+
+        // Displays comments that the current user has just made right away
+        setMyComments([...myComments, { username: user.username, comment: commentValue }]);
         setShowMyComments(true);
+
+        // Make a call to the DB to get all the comments on that post
+        getAllComments();
+
+        // Empty out the comment text field
+        setCommentValue('');
     };
 
     return (
@@ -45,16 +99,17 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                         <span className='description-username'>{username}</span>
                         <span>{description}</span>
                     </div>
-                    {comments === [] ? null : (
+                    {allComments === [] ? null : (
                         <>
                             {viewComments ? (
                                 <div className='comment-container'>
-                                    {comments.map((post) => {
+                                    {allComments.map((post) => {
                                         return <Comments username={post.username} comment={post.comment} />;
                                     })}
                                     <div
                                         onClick={() => {
                                             setViewComments(false);
+                                            setShowMyComments(true);
                                         }}
                                         className='comment-view-container'>
                                         Hide all comments
@@ -64,14 +119,25 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                                 <div
                                     onClick={() => {
                                         setViewComments(true);
+                                        setShowMyComments(false);
                                     }}
                                     className='comment-view-container'>
-                                    View all {comments.length} comments
+                                    View all {allComments.length} comments
                                 </div>
                             )}
                         </>
                     )}
-                    {showMyComments ? <></> : null}
+                    {showMyComments ? (
+                        <>
+                            {myComments !== [] ? (
+                                <>
+                                    {myComments.map((post) => {
+                                        return <Comments username={post.username} comment={post.comment} />;
+                                    })}
+                                </>
+                            ) : null}
+                        </>
+                    ) : null}
                 </div>
                 <div className='comment-input-container'>
                     <div style={{ display: 'flex' }}>
@@ -79,6 +145,7 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                         <input
                             className='comment-input'
                             placeholder='Add a comment...'
+                            onKeyPress={(e) => e.key === 'Enter' && handlePostClick()}
                             value={commentValue}
                             onChange={(e) => {
                                 setCommentValue(e.target.value);
