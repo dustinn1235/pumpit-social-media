@@ -120,6 +120,7 @@ body {
 .landing-page-button {
     border: none;
     padding: 1.5rem 3rem;
+    margin-bottom: 2rem;
     border-radius: 500px;
     font-size: 1.25rem;
     font-family: 'Spartan-R';
@@ -421,7 +422,7 @@ body {
     display: grid;
     width: 1000px;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 /* ========== Page Not Found ========== */
