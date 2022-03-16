@@ -78,6 +78,7 @@ const Navbar = () => {
                             onClick={() => {
                                 handleNavbarClick('/signin');
                             }}
+                            style={{ marginRight: '1rem' }}
                             className={location.pathname === '/signin' ? 'navbar-link-clicked' : 'navbar-link'}>
                             Sign In
                         </div>
@@ -85,6 +86,7 @@ const Navbar = () => {
                             onClick={() => {
                                 handleNavbarClick('/signup');
                             }}
+                            style={{ marginLeft: '1rem' }}
                             className={location.pathname === '/signup' ? 'navbar-link-clicked' : 'navbar-link'}>
                             Sign Up
                         </div>
