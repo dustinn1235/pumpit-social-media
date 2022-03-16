@@ -5,6 +5,7 @@ import AppContext from '../context/AppContext';
 import Home from '@mui/icons-material/Home';
 import Profile from '@mui/icons-material/AccountCircle';
 import Goal from '@mui/icons-material/EmojiEvents';
+import Add from '@mui/icons-material/AddCircleOutlineOutlined';
 
 const Navbar = () => {
     const { isSignedIn, setIsSignedIn } = useContext(AppContext);
@@ -43,6 +44,13 @@ const Navbar = () => {
                             }}
                             className={location.pathname === '/user/home' ? 'navbar-link-clicked' : 'navbar-link'}>
                             <Home fontSize={'large'} />
+                        </div>
+                        <div
+                            onClick={() => {
+                                handleNavbarClick('/user/post');
+                            }}
+                            className={location.pathname === '/user/post' ? 'navbar-link-clicked' : 'navbar-link'}>
+                            <Add fontSize={'large'} />
                         </div>
                         <div
                             onClick={() => {

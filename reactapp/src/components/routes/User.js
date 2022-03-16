@@ -8,6 +8,7 @@ const User = ({ children }) => {
     const HomeLazy = lazy(() => import('../user/Home'));
     const ProfileLazy = lazy(() => import('../user/Profile'));
     const WorkoutsLazy = lazy(() => import('../user/Workouts'));
+    const NewPostLazy = lazy(() => import('../user/NewPost'));
     const PageNotFoundLazy = lazy(() => import('../PageNotFound'));
 
     return (
@@ -17,6 +18,7 @@ const User = ({ children }) => {
                 <Switch>
                     <Route exact path={`${url}/home`} render={(props) => <HomeLazy {...props} />} />
                     <Route exact path={`${url}/workouts`} render={(props) => <WorkoutsLazy {...props} />} />
+                    <Route exact path={`${url}/post`} render={(props) => <NewPostLazy {...props} />} />
                     <Route exact path={`${url}/profile`} render={(props) => <ProfileLazy {...props} />} />
                     <Route render={(props) => <PageNotFoundLazy {...props} />} />
                 </Switch>
