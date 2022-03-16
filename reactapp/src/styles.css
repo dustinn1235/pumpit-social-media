@@ -294,13 +294,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 8rem;
+    margin: 4rem 0;
 }
 
 .profile-header {
     font-family: 'Spartan-B';
-    font-size: 3.5rem;
-    margin-bottom: 2rem;
+    font-size: 3rem;
+    margin-left: 3rem;
 }
 
 .profile-posts-container {
@@ -313,6 +313,62 @@ body {
     width: 250px;
     height: 250px;
     object-fit: cover;
+}
+
+.profile-avatar-image {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.upper-card-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.profile-edit-button {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+}
+
+/* ========== Workouts ========== */
+
+.workout-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 4rem 0;
+}
+
+.workout-header {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.workout-helper-text {
+    text-align: center;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.check-box-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 400px;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+.generate-workouts-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
 }
 
 /* ========== Page Not Found ========== */

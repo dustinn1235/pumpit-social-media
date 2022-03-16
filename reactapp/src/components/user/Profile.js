@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import AppContext from '../../context/AppContext';
 import ProfilePosts from './ProfilePosts';
+import Button from '@mui/material/Button';
 
 const Profile = () => {
     const { user } = useContext(AppContext);
@@ -95,13 +96,42 @@ const Profile = () => {
             ],
         },
     ];
+
+    const handleEditProfileClick = () => {};
+
     return (
         <div className='profile-container'>
-            <div className='profile-header'>{user.username}</div>
-            <div className='profile-posts-container'>
-                {data.map((post) => {
-                    return <ProfilePosts key={post.id} image={post.image} />;
-                })}
+            <div className='card-container'>
+                <div className='upper-card-container'>
+                    <img
+                        className='profile-avatar-image'
+                        src='https://thumbs.dreamstime.com/b/profile-icon-male-avatar-portrait-casual-person-silhouette-face-flat-design-vector-46846325.jpg'
+                        alt='avatar'
+                    />
+                    <div className='profile-header'>{user.username}</div>
+                    <div className='profile-edit-button'>
+                        <Button
+                            onClick={handleEditProfileClick}
+                            style={{
+                                textTransform: 'none',
+                                borderRadius: '500px',
+                                padding: '0.5rem 1rem',
+                                backgroundColor: '#f4f4f4',
+                                color: 'black',
+                                fontFamily: 'Spartan-B',
+                                fontSize: '1rem',
+                            }}
+                            variant='contained'>
+                            Edit Profile
+                        </Button>
+                    </div>
+                </div>
+                <hr style={{ width: '100%', margin: '2rem 0' }} />
+                <div className='profile-posts-container'>
+                    {data.map((post) => {
+                        return <ProfilePosts key={post.id} image={post.image} />;
+                    })}
+                </div>
             </div>
         </div>
     );

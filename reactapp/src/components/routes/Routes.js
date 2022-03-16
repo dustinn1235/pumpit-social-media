@@ -32,9 +32,9 @@ function Routes() {
                     <AuthRoute path='/user' isSignedIn={isSignedIn}>
                         <UserLazy />
                     </AuthRoute>
-                    {/* If none of the paths above match, show the page not found */}
-                    <Route component={PageNotFound} />
                 </Suspense>
+                {/* If none of the paths above match, show the page not found */}
+                <Route component={PageNotFound} />
             </Switch>
         </>
     );
