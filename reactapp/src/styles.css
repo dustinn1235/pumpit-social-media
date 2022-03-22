@@ -425,6 +425,30 @@ body {
     gap: 1.5rem;
 }
 
+/* ========== New Post =========== */
+
+.new-post-image-preview {
+    width: 250px;
+    border: 2px solid gray;
+}
+
+.new-post-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed black;
+    border-radius: 20px;
+    width: 250px;
+    height: 250px;
+}
+
+.post-content-container {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
 /* ========== Page Not Found ========== */
 
 .page-not-found-container {
