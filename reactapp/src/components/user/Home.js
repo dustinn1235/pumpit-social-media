@@ -2,6 +2,8 @@ import React from 'react';
 import Posts from './Posts';
 
 const Home = () => {
+    // TODO Get this data from the DB
+    // Implement a useEffect for the DB call
     const data = [
         {
             id: 1,

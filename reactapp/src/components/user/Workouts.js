@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 
 const Workouts = () => {
+    // TODO Need to get images/videos to support each different workout
+    // TODO Need to get descriptions for each workout.
+
     // Different types of muscles
     const muscleGroups = ['Chest', 'Back', 'Biceps', 'Triceps', 'Shoulders', 'Quads', 'Hamstrings', 'Calfs', 'Glutes'];
 

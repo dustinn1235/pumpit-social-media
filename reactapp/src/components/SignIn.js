@@ -51,7 +51,7 @@ const SignIn = () => {
         // setValues({ ...values, password: '' });
 
         // If the DB call is true, run the code below
-        setUser({ ...user, username: values.username });
+        setUser({ ...user, username: values.username, password: values.password });
         setIsSignedIn(true);
         history.push('/user/home');
     };

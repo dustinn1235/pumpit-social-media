@@ -299,6 +299,25 @@ body {
     margin: 4rem 0;
 }
 
+.editprofile-header {
+    font-family: 'Spartan-B';
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.editprofile-profile-pic-header {
+    font-family: 'Spartan-R';
+    color: var(--button-blue);
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.editprofile-profile-pic-header:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .profile-header {
     font-family: 'Spartan-B';
     font-size: 3rem;

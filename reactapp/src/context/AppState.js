@@ -4,6 +4,7 @@ import { useState } from 'react';
 const AppState = (props) => {
     const usr = {
         username: '',
+        password: '',
     };
 
     const [user, setUser] = useState(usr);

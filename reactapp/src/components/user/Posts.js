@@ -15,45 +15,8 @@ const Posts = ({ id, username, image, date, description, comments }) => {
     const [showMyComments, setShowMyComments] = useState(false);
     const [allComments, setAllComments] = useState(comments);
 
-    // useEffect(() => {
-    //     let likesFromLocalStorage = JSON.parse(window.localStorage.getItem('likes'));
-    //     console.log(likesFromLocalStorage);
-    //     if (likesFromLocalStorage !== null) {
-    //         if (likesFromLocalStorage.filter((e) => e.postId === id && e.username === user.username).length > 0) {
-    //             setLike(true);
-    //         }
-    //     } else {
-    //         window.localStorage.setItem(
-    //             'likes',
-    //             JSON.stringify([
-    //                 {
-    //                     postId: -1,
-    //                     username: '',
-    //                 },
-    //             ]),
-    //         );
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
     const handleLikeClick = () => {
-        // Shows a red heart
-        // let likesFromLocalStorage = JSON.parse(window.localStorage.getItem('likes'));
-        // if (like === false) {
-        //     let filtered = likesFromLocalStorage.filter((e) => e.postId !== id && e.username !== user.username);
-        //     console.log('This is the like filtered: ', filtered);
-        //     filtered.push({
-        //         postId: id,
-        //         username: user.username,
-        //     });
-        //     window.localStorage.setItem('likes', JSON.stringify(filtered));
-        //     setLike(true);
-        // } else {
-        //     let filtered = likesFromLocalStorage.filter((e) => e.postId !== id && e.username !== user.username);
-        //     console.log('This is the unlike filtered: ', filtered);
-        //     window.localStorage.setItem('likes', JSON.stringify(filtered));
-        //     setLike(false);
-        // }
+        // TODO Make a call to the DB to update the like boolean
         if (like === false) {
             setLike(true);
         } else {
@@ -61,11 +24,13 @@ const Posts = ({ id, username, image, date, description, comments }) => {
         }
     };
 
+    // Function for loading in all the comments
     const getAllComments = () => {
         // TODO Make a call to the DB to get all comments that match the post id (id is passed as argument)
         // setAllComments(responseFromDB)
     };
 
+    // Function for posting a comment
     const handlePostClick = () => {
         // TODO send post information to DB (username, comment)
 
