@@ -146,7 +146,7 @@ const Profile = () => {
                             />
 
                             <Button
-                                onClick={handleEditProfileClick}
+                                onClick={() => setEditProfile(false)}
                                 style={{
                                     textTransform: 'none',
                                     borderRadius: '500px',
