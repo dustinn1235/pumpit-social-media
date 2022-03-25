@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Icon from '../images/barbell.png';
 import IconButton from '@mui/material/IconButton';
@@ -16,6 +16,8 @@ import AppContext from '../context/AppContext';
 const SignIn = () => {
     const history = useHistory();
     const { setIsSignedIn, user, setUser } = useContext(AppContext);
+
+    const [showError, setShowError] = useState(false);
 
     const [values, setValues] = React.useState({
         username: '',
@@ -43,6 +45,12 @@ const SignIn = () => {
     const handleSignInClick = () => {
         // TODO Validate form values
         // values.username and values.password match an account in the DB
+
+        // If the DB call is false, run the code below
+        // setShowError(true);
+        // setValues({ ...values, password: '' });
+
+        // If the DB call is true, run the code below
         setUser({ ...user, username: values.username });
         setIsSignedIn(true);
         history.push('/user/home');
@@ -62,6 +70,14 @@ const SignIn = () => {
                         to continue to <span style={{ color: 'var(--button-blue)' }}>ProjectName</span>
                     </div>
                 </div>
+
+                {showError ? (
+                    <div style={{ margin: '1rem 0 0 0' }} className='card-header-icon-container'>
+                        <div style={{ color: 'red' }} className='card-sub-header'>
+                            Incorrect Password
+                        </div>
+                    </div>
+                ) : null}
 
                 <TextField style={{ marginTop: '2rem' }} value={values.username} onChange={handleChange('username')} id='outlined-basic' label='Username' variant='outlined' />
 

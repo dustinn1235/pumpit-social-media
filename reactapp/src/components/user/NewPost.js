@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import Help from '@mui/icons-material/HelpOutline';
 import MenuItem from '@mui/material/MenuItem';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const NewPost = () => {
     // History variable is used to update the path of the site

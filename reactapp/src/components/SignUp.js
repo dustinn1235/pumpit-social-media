@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
 
 import AppContext from '../context/AppContext';
 
@@ -39,8 +40,10 @@ const SignUp = () => {
         event.preventDefault();
     };
 
-    let validForm = values.username === '' || values.password === '' ? false : true;
+    let validPassword = /^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%?=*&]).{8,})$/.test(values.password);
     let validPasswords = values.password === values.confirmpassword ? true : false;
+
+    let validForm = values.username !== '' && validPasswords && validPassword ? true : false;
 
     const handleSignUpClick = () => {
         // TODO Send user info to DB
@@ -66,23 +69,28 @@ const SignUp = () => {
 
                 <TextField style={{ marginTop: '2rem' }} value={values.username} onChange={handleChange('username')} id='outlined-basic' label='Username' variant='outlined' />
 
-                <FormControl style={{ marginTop: '2rem' }} variant='outlined'>
-                    <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
-                    <OutlinedInput
-                        id='outlined-adornment-password'
-                        type={values.showPassword ? 'text' : 'password'}
-                        value={values.password}
-                        onChange={handleChange('password')}
-                        endAdornment={
-                            <InputAdornment position='end'>
-                                <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge='end'>
-                                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        label='Password'
-                    />
-                </FormControl>
+                <Tooltip
+                    open={!validPassword && values.password !== ''}
+                    placement={'right'}
+                    title='Minimum eight characters, one lowercase, one uppercase, at least one number, and at least one special character'>
+                    <FormControl style={{ marginTop: '2rem' }} variant='outlined'>
+                        <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
+                        <OutlinedInput
+                            id='outlined-adornment-password'
+                            type={values.showPassword ? 'text' : 'password'}
+                            value={values.password}
+                            onChange={handleChange('password')}
+                            endAdornment={
+                                <InputAdornment position='end'>
+                                    <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge='end'>
+                                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            label='Password'
+                        />
+                    </FormControl>
+                </Tooltip>
 
                 <FormControl style={{ margin: '2rem 0' }} variant='outlined'>
                     <InputLabel htmlFor='outlined-adornment-password'>Confirm Password</InputLabel>
