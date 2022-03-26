@@ -299,23 +299,26 @@ body {
     margin: 4rem 0;
 }
 
-.editprofile-header {
+.edit-profile-header {
     font-family: 'Spartan-B';
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    text-align: center;
 }
 
-.editprofile-profile-pic-header {
-    font-family: 'Spartan-R';
-    color: var(--button-blue);
-    font-size: 1.25rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-.editprofile-profile-pic-header:hover {
+.edit-profile-profile-pic-header:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.edit-profile-icon {
+    padding: 0.25rem;
+    border-radius: 50%;
+}
+
+.edit-profile-icon:hover {
+    cursor: pointer;
+    background-color: gainsboro;
 }
 
 .profile-header {
