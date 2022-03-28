@@ -6,7 +6,8 @@ body {
     max-width: 100%;
     overflow-x: hidden;
     font-family: 'Spartan-R';
-    background-color: #f4f4f4;
+    background: rgb(124,166,230);
+    background: linear-gradient(180deg, rgba(124,166,230,1) 0%, rgba(219,245,250,1) 100%);
 }
 
 /* ========== Colors ========== */
@@ -99,6 +100,10 @@ body {
     justify-content: center;
     max-width: 65vw;
     margin: 10rem auto 0 auto;
+    outline: 10px solid #f4faff;
+    outline-offset: 80px;
+    border-radius: 14px;
+    color: white;
 }
 
 .landing-page-image {
@@ -131,9 +136,11 @@ body {
 
 .landing-page-button:hover {
     background-color: var(--button-blue);
-    color: white;
+    color: var(--button-blue);
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 6px 6px;
+    background-color: #dbf5fa;
+    color: rgb(133, 160, 250);
 }
 
 /* ========== Sign In ========== */
