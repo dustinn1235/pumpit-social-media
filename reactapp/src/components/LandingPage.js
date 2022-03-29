@@ -15,18 +15,14 @@ const LandingPage = () => {
     return (
         <div className='landing-page-container'>
             <div>
-                <div className='landing-page-header' style={{
-                    color: "#d7e4f7",
-                    marginBottom: "0px"
-                }}>Workout,</div>
-                <div className='landing-page-header'>and start sharing daily!</div>
+                <div className='landing-page-header'>Workout, and start sharing daily!</div>
                 <div className='landing-page-subheader'>Get daily workout goals and compare your results against others.</div>
                 <button onClick={handleStartSharingClick} className='landing-page-button'>
                     JOIN NOW
                 </button>
             </div>
             <img className='landing-page-image fade-in' src={images[0]} alt='workout' />
-        </div >
+        </div>
     );
 };
 
