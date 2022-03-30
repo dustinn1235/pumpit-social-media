@@ -7,13 +7,16 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     font-family: 'Spartan-R';
-    background: linear-gradient(180deg, rgb(124, 166, 230) 0%, #bfd4f3 100%);
+    background: linear-gradient(180deg, var(--top-grad) 0%, var(--bottom-grad) 100%);
 }
 
 /* ========== Colors ========== */
 
 :root {
-    --button-blue: #3e7dda;
+    --button-blue: #193359;
+    --top-grad: rgb(124, 166, 230);
+    --bottom-grad: #bfd4f3;
+    --grey-blue: #51698C;
 }
 
 /* Fonts */
@@ -44,7 +47,8 @@ body {
     top: 0;
     width: 100%;
     height: 64px;
-    background-color: white;
+    background-color: var(--top-grad);
+    border-bottom: 10px solid #f4faff;
 }
 
 .navbar-icon-header-container {
@@ -69,12 +73,14 @@ body {
 
 .navbar-header {
     font-size: 2rem;
+    color: #f4faff;
 }
 
 .navbar-link {
     font-size: 1.5rem;
     margin: 0 0.5rem;
     transition: 0.2s;
+    color: #f4faff;
 }
 
 .navbar-link-clicked {
@@ -136,7 +142,7 @@ body {
 }
 
 .landing-page-button:hover {
-    background-color: var(--button-blue);
+    background-color: var(--top-grad);
     color: white;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 6px 6px;
@@ -162,12 +168,19 @@ body {
     margin: 0 auto;
 }
 
+.sign-in-button:hover {
+    background-color: var(--button-blue);
+    color: white;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 6px 6px;
+}
+
 .card-container {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: #f4faff;
     padding: 2rem 4rem;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 4px 8px 0px;
     border-radius: 15px;
     margin-bottom: 1rem;
 }
@@ -205,7 +218,7 @@ body {
 .helper-link {
     margin-top: 0.5rem;
     font-size: 1.25rem;
-    color: var(--button-blue);
+    color: var(--top-grad);
     text-decoration: underline;
 }
 
@@ -228,8 +241,9 @@ body {
 /* ========== Posts ========== */
 
 .post-container {
-    background-color: white;
-    border: 1px solid gray;
+    background-color: #f4faff;
+    border: 1px solid var(--grey-blue);
+    border-radius: 10px;
 }
 
 .post-header {
@@ -241,6 +255,7 @@ body {
 
 .post-header-username {
     font-size: 1.5rem;
+    margin-left: 5px;
 }
 
 .post-image {
@@ -250,6 +265,7 @@ body {
 .post-header-date {
     font-size: 1rem;
     font-family: 'Spartan-L';
+    margin-right: 5px;
 }
 
 .footer-no-comment-input {
@@ -258,6 +274,7 @@ body {
 
 .like-icon:hover {
     cursor: pointer;
+    color: #c73e3e;
 }
 
 .description-container {
@@ -286,7 +303,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    border-top: 1px solid gray;
+    border-top: 1px solid var(--grey-blue);
 }
 
 .comment-input {

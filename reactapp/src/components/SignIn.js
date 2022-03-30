@@ -67,7 +67,7 @@ const SignIn = () => {
                     <img className='card-icon' src={Icon} alt='barbell' />
                     <div className='card-header'>Sign In</div>
                     <div className='card-sub-header'>
-                        to continue to <span style={{ color: 'var(--button-blue)' }}>ProjectName</span>
+                        to continue to <span style={{ color: 'var(--top-grad)' }}>ProjectName</span>
                     </div>
                 </div>
 
@@ -108,7 +108,7 @@ const SignIn = () => {
                         padding: '0.5rem 1rem',
                         width: '50%',
                         margin: '0 auto',
-                        backgroundColor: validForm ? 'var(--button-blue)' : 'gray',
+                        backgroundColor: validForm ? 'var(--top-grad)' : 'var(--grey-blue)',
                         color: validForm ? 'white' : '#DCDCDC',
                         fontFamily: 'Spartan-B',
                         fontSize: '1.25rem',
@@ -121,7 +121,7 @@ const SignIn = () => {
 
                 <div className='helper-text-container'>
                     <div className='helper-header'>Don't have an account?</div>
-                    <div onClick={handleGoToSignUpClick} className='helper-link'>
+                    <div onClick={handleGoToSignUpClick} className='helper-link' style={{ color: 'var(--top-grad)' }}>
                         Sign Up
                     </div>
                 </div>

@@ -63,7 +63,7 @@ const SignUp = () => {
                     <img className='card-icon' src={Icon} alt='barbell' />
                     <div className='card-header'>Sign Up</div>
                     <div className='card-sub-header'>
-                        for a <span style={{ color: 'var(--button-blue)' }}>ProjectName</span> account
+                        for a <span style={{ color: 'var(--top-grad)' }}>ProjectName</span> account
                     </div>
                 </div>
 
@@ -119,7 +119,7 @@ const SignUp = () => {
                         padding: '0.5rem 1rem',
                         width: '50%',
                         margin: '0 auto',
-                        backgroundColor: validForm && validPasswords ? 'var(--button-blue)' : 'gray',
+                        backgroundColor: validForm && validPasswords ? 'var(--top-grad)' : 'var(--grey-blue)',
                         color: validForm && validPasswords ? 'white' : '#DCDCDC',
                         fontFamily: 'Spartan-B',
                         fontSize: '1.25rem',
@@ -132,7 +132,7 @@ const SignUp = () => {
 
                 <div className='helper-text-container'>
                     <div className='helper-header'>Already have an account?</div>
-                    <div onClick={handleGoToSignInClick} className='helper-link'>
+                    <div onClick={handleGoToSignInClick} className='helper-link' style={{ color: 'var(--top-grad)' }}>
                         Sign In
                     </div>
                 </div>
