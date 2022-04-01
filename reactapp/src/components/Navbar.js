@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
 import Icon from '../images/barbell.png';
 import { useHistory, useLocation } from 'react-router-dom';
-import AppContext from '../context/AppContext';
 import Home from '@mui/icons-material/Home';
 import Profile from '@mui/icons-material/AccountCircle';
 import Goal from '@mui/icons-material/EmojiEvents';
 import Add from '@mui/icons-material/AddCircleOutlineOutlined';
+import { useAuth } from '../context/AuthContext';
+import { useState } from 'react';
 
 const Navbar = () => {
-    const { isSignedIn, setIsSignedIn } = useContext(AppContext);
+    // const { isSignedIn, setIsSignedIn } = useContext(AppContext);
+    const { signout, currentUser } = useAuth();
+    const [error, setError] = useState("");
 
     // History variable is used to update the path of the site
     const history = useHistory();
@@ -20,14 +22,21 @@ const Navbar = () => {
     };
 
     // Sign out user
-    const handleSignOutClick = () => {
-        setIsSignedIn(false);
-        history.push('/');
+    const handleSignOutClick = async () => {
+        setError('');
+        try{
+            await signout();
+            history.push('/');
+        }
+        catch{
+            setError("Failed to sign out");
+        }
+        
     };
 
     return (
         <div className='navbar-container'>
-            {isSignedIn ? (
+            {currentUser ? (
                 <>
                     <div
                         onClick={() => {

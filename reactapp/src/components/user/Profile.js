@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
-import AppContext from '../../context/AppContext';
 import ProfilePosts from './ProfilePosts';
 import Button from '@mui/material/Button';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const Profile = () => {
-    const { user, setUser } = useContext(AppContext);
+    const { currentUser } = useAuth();
 
     const history = useHistory();
 
@@ -115,7 +114,7 @@ const Profile = () => {
                         src='https://thumbs.dreamstime.com/b/profile-icon-male-avatar-portrait-casual-person-silhouette-face-flat-design-vector-46846325.jpg'
                         alt='avatar'
                     />
-                    <div className='profile-header'>{user.username}</div>
+                    <div className='profile-header'>{currentUser.email}</div>
                     <div className='profile-edit-button'>
                         <Button
                             onClick={handleEditProfileClick}

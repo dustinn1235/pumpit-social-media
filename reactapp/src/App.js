@@ -1,25 +1,26 @@
 import './styles.css';
-import AppState from './context/AppState';
 
 // Components
 import Navbar from './components/Navbar';
 
 // Routes
 import Routes from './components/routes/Routes';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
     return (
-        <AppState>
+        <div id='page-container'>
             <Router>
-                <Navbar />
-                {/* This div is needed to add a height to the fixed Navbar above */}
-                <div style={{ height: '64px' }} />
-                <div id='page-container'>
+                <AuthProvider>
+                    <Navbar />
+                    {/* This div is needed to add a height to the fixed Navbar above */}
+                    <div style={{ height: '64px' }} />
                     <Routes />
-                </div>
+                </AuthProvider>
+
             </Router>
-        </AppState>
+        </div>
     );
 }
 

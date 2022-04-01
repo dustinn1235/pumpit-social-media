@@ -15,14 +15,15 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/icons-material/CheckBoxOutlineBlank';
 import Typography from '@mui/material/Typography';
+import { useAuth } from '../../context/AuthContext';
 
 const EditProfile = () => {
-    const { user, setUser } = useContext(AppContext);
+    const { currentUser } = useAuth();
     const history = useHistory();
 
     const [imageUpload, setImageUpload] = useState('');
 
-    const [editUsername, setEditUsername] = useState(user.username);
+    const [editUsername, setEditUsername] = useState(currentUser.email);
     const [editUsernameBool, setEditUsernameBool] = useState(false);
 
     const [editPassword, setEditPassword] = useState('');
@@ -32,8 +33,8 @@ const EditProfile = () => {
     const [editConfirmPassword, setEditConfirmPassword] = useState('');
 
     const initialValues = {
-        username: user.username,
-        password: user.password,
+        username: currentUser.email,
+        password: currentUser.password,
     };
 
     const handleUploadedFiles = (e) => {
@@ -63,14 +64,14 @@ const EditProfile = () => {
     const handleCheckIconClick = (type) => {
         if (type === 'username') {
             // TODO Make a DB call to save the updated Username
-            setUser({ ...user, username: editUsername });
-            initialValues.username = editUsername;
-            setEditUsernameBool(false);
+            // setUser({ ...user, username: editUsername });
+            // initialValues.username = editUsername;
+            // setEditUsernameBool(false);
         } else if (type === 'password') {
             // TODO Make a DB call to save the updated Password
-            setUser({ ...user, password: editPassword });
-            initialValues.password = editPassword;
-            setEditPasswordBool(false);
+            // setUser({ ...user, password: editPassword });
+            // initialValues.password = editPassword;
+            // setEditPasswordBool(false);
         }
     };
 

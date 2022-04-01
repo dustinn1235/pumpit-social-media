@@ -1,13 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
-import AppContext from '../../context/AppContext';
+import React, { useState } from 'react';
 import HeartFilled from '@mui/icons-material/Favorite';
 import HeartOutlined from '@mui/icons-material/FavoriteBorder';
 import Comment from '@mui/icons-material/ModeCommentOutlined';
 import Comments from './Comments';
 import Button from '@mui/material/Button';
+import { useAuth } from '../../context/AuthContext';
 
 const Posts = ({ id, username, image, date, description, comments }) => {
-    const { user } = useContext(AppContext);
+    const { currentUser } = useAuth();
     const [like, setLike] = useState(false);
     const [viewComments, setViewComments] = useState(false);
     const [commentValue, setCommentValue] = useState('');
@@ -35,7 +35,7 @@ const Posts = ({ id, username, image, date, description, comments }) => {
         // TODO send post information to DB (username, comment)
 
         // Displays comments that the current user has just made right away
-        setMyComments([...myComments, { username: user.username, comment: commentValue }]);
+        setMyComments([...myComments, { username: currentUser && currentUser.email, comment: commentValue }]);
         setShowMyComments(true);
 
         // Make a call to the DB to get all the comments on that post
