@@ -82,9 +82,16 @@ const SignUp = () => {
                 </div>
 
                 <form className='sign-up-form' onSubmit={handleSignUpClick}>
-                    <TextField style={{ marginTop: '2rem' }} value={values.email} onChange={handleChange('email')} id='outlined-basic' label='Email' variant='outlined' />
+                    <TextField style={{ marginTop: '2rem' }} value={values.email} onChange={handleChange('email')} id='outlined-basic-email' label='Email' variant='outlined' />
 
-                    <TextField style={{ marginTop: '2rem' }} value={values.username} onChange={handleChange('username')} id='outlined-basic' label='Username' variant='outlined' />
+                    <TextField
+                        style={{ marginTop: '2rem' }}
+                        value={values.username}
+                        onChange={handleChange('username')}
+                        id='outlined-basic-username'
+                        label='Username'
+                        variant='outlined'
+                    />
 
                     <Tooltip
                         open={!validPassword && values.password !== ''}
@@ -110,9 +117,9 @@ const SignUp = () => {
                     </Tooltip>
 
                     <FormControl style={{ margin: '2rem 0' }} variant='outlined'>
-                        <InputLabel htmlFor='outlined-adornment-password'>Confirm Password</InputLabel>
+                        <InputLabel htmlFor='outlined-adornment-confirmpassword'>Confirm Password</InputLabel>
                         <OutlinedInput
-                            id='outlined-adornment-password'
+                            id='outlined-adornment-confirmpassword'
                             type={values.showPassword ? 'text' : 'password'}
                             value={values.confirmpassword}
                             onChange={handleChange('confirmpassword')}
