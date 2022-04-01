@@ -1,13 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../firebase";
+import React, { useContext, useState, useEffect } from 'react';
+
+import { auth } from '../firebase';
 
 const AuthContext = React.createContext();
 
-export function useAuth(){
+export function useAuth() {
     return useContext(AuthContext);
 }
 
-export function AuthProvider({ children }){
+export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -22,16 +23,16 @@ export function AuthProvider({ children }){
         // });
     }
 
-    function signin(email, password){
+    function signin(email, password) {
         return auth.signInWithEmailAndPassword(email, password);
     }
 
-    function signout(){
+    function signout() {
         return auth.signOut();
     }
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
             setCurrentUser(user);
             setLoading(false);
         });
@@ -46,9 +47,5 @@ export function AuthProvider({ children }){
         signout,
     };
 
-    return(
-       <AuthContext.Provider value={value}>
-           {!loading && children}
-        </AuthContext.Provider>
-    );
+    return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
 }

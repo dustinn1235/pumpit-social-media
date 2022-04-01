@@ -51,6 +51,34 @@ body {
     border-bottom: 3px solid #f4faff;
 }
 
+.navbar-menu-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: fixed;
+    margin-top: 64px;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 20px 100px rgb(0 0 0 / 30%);
+    font-family: 'Spartan-R';
+    font-size: 1rem;
+}
+
+.navbar-menu-link {
+    text-align: right;
+    margin: 0.75rem 1rem;
+    font-size: 1.25rem;
+    color: var(--top-grad);
+}
+
+.navbar-menu-link-clicked {
+    text-align: right;
+    margin: 0.75rem 1rem;
+    font-size: 1.3rem;
+    color: var(--button-blue);
+}
+
 .navbar-icon-header-container {
     display: flex;
     align-items: center;
@@ -97,6 +125,11 @@ body {
     color: var(--button-blue);
     cursor: pointer;
     margin-bottom: 0.25rem;
+}
+
+.navbar-menu-icon:hover {
+    color: var(--button-blue);
+    cursor: pointer;
 }
 
 /* ========== Landing Page Styles ========== */
@@ -154,7 +187,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5rem;
+    margin-top: 4rem;
 }
 
 .Button:disabled {
@@ -495,6 +528,22 @@ body {
     margin-top: 8rem;
 }
 
+@media only screen and (max-width: 1500px) {
+    .landing-page-container {
+        flex-direction: column;
+        text-align: center;
+        outline: 8px solid #f4faff;
+        outline-offset: 60px;
+    }
+    .landing-page-header {
+        font-size: 5rem;
+    }
+    .landing-page-image {
+        height: 450px;
+        width: 450px;
+    }
+}
+
 /* Tablet View */
 @media only screen and (max-width: 1000px) {
     .workouts-grid {
@@ -509,6 +558,26 @@ body {
     .show-workout-top {
         width: 80vw;
     }
+    .landing-page-container {
+        outline-offset: 10vw;
+    }
+    .landing-page-header {
+        font-size: 4rem;
+    }
+    .landing-page-subheader {
+        font-size: 1.5rem;
+    }
+    .landing-page-button {
+        border: none;
+        padding: 1rem 2rem;
+        margin-bottom: 2rem;
+        border-radius: 500px;
+        font-size: 1rem;
+        font-family: 'Spartan-R';
+        transition: all 0.2s ease-in-out;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 3px;
+    }
 }
 
 /* Mobile View */
@@ -518,5 +587,21 @@ body {
         flex-direction: column;
         margin: 0 auto;
         width: 90vw;
+    }
+    .landing-page-container {
+        margin: 12vh auto;
+    }
+    .landing-page-header {
+        font-size: 2.75rem;
+    }
+    .landing-page-image {
+        height: 70vw;
+        width: 70vw;
+    }
+    .card-container {
+        padding: 1rem 2rem;
+    }
+    .card-sub-header {
+        text-align: center;
     }
 }
