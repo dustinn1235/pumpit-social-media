@@ -169,26 +169,42 @@ const Navbar = () => {
                                 <div
                                     onClick={() => {
                                         setToggleMenu(false);
-                                    }}>
+                                        handleNavbarClick('/user/home');
+                                    }}
+                                    className={location.pathname === '/' ? 'navbar-menu-link-clicked' : 'navbar-menu-link'}>
                                     Home
                                 </div>
                                 <div
                                     onClick={() => {
                                         setToggleMenu(false);
-                                    }}>
-                                    About
+                                        handleNavbarClick('/user/post');
+                                    }}
+                                    className={location.pathname === '/' ? 'navbar-menu-link-clicked' : 'navbar-menu-link'}>
+                                    New Post
                                 </div>
                                 <div
                                     onClick={() => {
                                         setToggleMenu(false);
-                                    }}>
-                                    Projects
+                                        handleNavbarClick('/user/workouts');
+                                    }}
+                                    className={location.pathname === '/' ? 'navbar-menu-link-clicked' : 'navbar-menu-link'}>
+                                    Workout
                                 </div>
                                 <div
                                     onClick={() => {
                                         setToggleMenu(false);
-                                    }}>
-                                    Contact
+                                        handleNavbarClick('/user/profile');
+                                    }}
+                                    className={location.pathname === '/' ? 'navbar-menu-link-clicked' : 'navbar-menu-link'}>
+                                    Profile
+                                </div>
+                                <div
+                                    onClick={() => {
+                                        setToggleMenu(false);
+                                        handleSignOutClick();
+                                    }}
+                                    className={location.pathname === '/' ? 'navbar-menu-link-clicked' : 'navbar-menu-link'}>
+                                    Sign Out
                                 </div>
                             </div>
                         ) : null}
