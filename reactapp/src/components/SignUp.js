@@ -77,7 +77,7 @@ const SignUp = () => {
                     <img className='card-icon' src={Icon} alt='barbell' />
                     <div className='card-header'>Sign Up</div>
                     <div className='card-sub-header'>
-                        for a <span style={{ color: 'var(--top-grad)' }}>ProjectName</span> account
+                        for a <span style={{ color: 'var(--top-grad)' }}>PumpIt</span> account
                     </div>
                 </div>
 

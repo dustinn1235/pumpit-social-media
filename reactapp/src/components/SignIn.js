@@ -70,7 +70,7 @@ const SignIn = () => {
                     <img className='card-icon' src={Icon} alt='barbell' />
                     <div className='card-header'>Sign In</div>
                     <div className='card-sub-header'>
-                        to continue to <span style={{ color: 'var(--top-grad)' }}>ProjectName</span>
+                        to continue to <span style={{ color: 'var(--top-grad)' }}>PumpIt</span>
                     </div>
                 </div>
 

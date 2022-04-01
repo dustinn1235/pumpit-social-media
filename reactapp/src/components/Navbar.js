@@ -50,7 +50,7 @@ const Navbar = () => {
                             }}
                             className='navbar-icon-header-container'>
                             <img className='navbar-icon' src={Icon} alt='barbell' />
-                            <span className='navbar-header'>ProjectName</span>
+                            <span className='navbar-header'>PumpIt</span>
                         </div>
                         {isMobile ? (
                             <div>
@@ -116,7 +116,7 @@ const Navbar = () => {
                             }}
                             className='navbar-icon-header-container'>
                             <img className='navbar-icon' src={Icon} alt='barbell' />
-                            <span className='navbar-header'>ProjectName</span>
+                            <span className='navbar-header'>PumpIt</span>
                         </div>
                         {isMobile ? (
                             <div>
