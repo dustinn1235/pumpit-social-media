@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Icon from '../images/barbell.png';
 import IconButton from '@mui/material/IconButton';
@@ -10,17 +10,21 @@ import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
+import { red } from '@material-ui/core/colors';
 
-import AppContext from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
+    const { signin, currentUser } = useAuth();
     const history = useHistory();
-    const { setIsSignedIn, user, setUser } = useContext(AppContext);
 
     const [showError, setShowError] = useState(false);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const [values, setValues] = React.useState({
         username: '',
+        email: '',
         password: '',
         showPassword: false,
     });
@@ -42,19 +46,19 @@ const SignIn = () => {
 
     let validForm = values.username === '' || values.password === '' ? false : true;
 
-    const handleSignInClick = () => {
-        // TODO Validate form values
-        // values.username and values.password match an account in the DB
+    const handleSignInClick = async (e) => {
+        e.preventDefault();
 
-        // If the DB call is false, run the code below
-        // setShowError(true);
-        // setValues({ ...values, password: '' });
-
-        // If the DB call is true, run the code below
-        setUser({ ...user, username: values.username, password: values.password });
-        setIsSignedIn(true);
-        history.push('/user/home');
-    };
+        try{
+            setError('');
+            setLoading(true);
+            await signin(values.email, values.password);
+            history.push("/user/home");
+        } catch(err){
+            setError(err.message);
+        }
+        setLoading(false);
+    }
 
     const handleGoToSignUpClick = () => {
         history.push('/signup');
@@ -79,43 +83,48 @@ const SignIn = () => {
                     </div>
                 ) : null}
 
-                <TextField style={{ marginTop: '2rem' }} value={values.username} onChange={handleChange('username')} id='outlined-basic' label='Username' variant='outlined' />
+                {/* New Version */}
+                <form className="sign-up-form" onSubmit={handleSignInClick}>
+                    <TextField style={{ marginTop: '2rem' }} value={values.email} onChange={handleChange('email')} id='outlined-basic' label='Email' variant='outlined' />
 
-                <FormControl style={{ margin: '2rem 0' }} variant='outlined'>
-                    <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
-                    <OutlinedInput
-                        id='outlined-adornment-password'
-                        type={values.showPassword ? 'text' : 'password'}
-                        value={values.password}
-                        onChange={handleChange('password')}
-                        endAdornment={
-                            <InputAdornment position='end'>
-                                <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge='end'>
-                                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        label='Password'
-                    />
-                </FormControl>
+                    <FormControl style={{ margin: '2rem 0' }} variant='outlined'>
+                        <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
+                        <OutlinedInput
+                            id='outlined-adornment-password'
+                            type={values.showPassword ? 'text' : 'password'}
+                            value={values.password}
+                            onChange={handleChange('password')}
+                            endAdornment={
+                                <InputAdornment position='end'>
+                                    <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge='end'>
+                                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            label='Password'
+                        />
+                    </FormControl>
 
-                <Button
-                    disabled={validForm ? false : true}
-                    onClick={handleSignInClick}
-                    style={{
-                        textTransform: 'none',
-                        borderRadius: '500px',
-                        padding: '0.5rem 1rem',
-                        width: '50%',
-                        margin: '0 auto',
-                        backgroundColor: validForm ? 'var(--top-grad)' : 'var(--grey-blue)',
-                        color: validForm ? 'white' : '#DCDCDC',
-                        fontFamily: 'Spartan-B',
-                        fontSize: '1.25rem',
-                    }}
-                    variant='contained'>
-                    Sign In
-                </Button>
+                    {error && <p style={{color: red,}}>{error}</p>}
+                    <Button
+                        disabled={validForm ? false : true}
+                        type="submit"
+                         style={{
+                            textTransform: 'none',
+                            borderRadius: '500px',
+                            padding: '0.5rem 1rem',
+                            width: '50%',
+                            margin: '0 auto',
+                            backgroundColor: validForm ? 'var(--top-grad)' : 'var(--grey-blue)',
+                            color: validForm ? 'white' : '#DCDCDC',
+                            fontFamily: 'Spartan-B',
+                            fontSize: '1.25rem',
+                        }}
+                        variant='contained'>
+                        Sign In
+                    </Button>
+                </form>
+
 
                 <hr style={{ width: '100%', margin: '2rem 0' }} />
 
@@ -124,6 +133,7 @@ const SignIn = () => {
                     <div onClick={handleGoToSignUpClick} className='helper-link' style={{ color: 'var(--top-grad)' }}>
                         Sign Up
                     </div>
+                    {/* <Link to="/signup">Sign Up</Link> */}
                 </div>
             </div>
         </div>

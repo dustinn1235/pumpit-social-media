@@ -2,15 +2,12 @@ import Bench from '../images/bench.png';
 import Curl from '../images/curl.png';
 import Run from '../images/run.png';
 import Rope from '../images/rope.png';
-import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import firebase from '../firebase';
 
 const LandingPage = () => {
     const history = useHistory();
     const images = [Bench, Curl, Rope, Run];
-
-    const [users, setUsers] = useState([]);
 
     const handleStartSharingClick = () => {
         history.push('/signin');

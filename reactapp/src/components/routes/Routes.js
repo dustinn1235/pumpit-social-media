@@ -1,7 +1,5 @@
-import React, { useContext, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-
-import AppContext from '../../context/AppContext';
 
 // Authorize page
 import AuthRoute from './AuthRoute';
@@ -13,13 +11,14 @@ import Loading from '../Loading';
 import LandingPage from '../LandingPage';
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
+import { useAuth } from '../../context/AuthContext';
 
 import PageNotFound from '../PageNotFound';
 
 const UserLazy = React.lazy(() => import('./User'));
 
 function Routes() {
-    const { isSignedIn } = useContext(AppContext);
+    const { currentUser } = useAuth();
     return (
         <>
             <Switch>
@@ -29,7 +28,7 @@ function Routes() {
 
                 <Suspense fallback={<Loading />}>
                     {/* === User Sign In Required */}
-                    <AuthRoute path='/user' isSignedIn={isSignedIn}>
+                    <AuthRoute path='/user' currentUser={currentUser}>
                         <UserLazy />
                     </AuthRoute>
                 </Suspense>
