@@ -137,6 +137,7 @@ const SignUp = () => {
                     {error && <p style={{ color: red }}>{error}</p>}
                     <Button
                         disabled={overallValidation ? false : true}
+                        type='submit'
                         style={{
                             textTransform: 'none',
                             borderRadius: '500px',
