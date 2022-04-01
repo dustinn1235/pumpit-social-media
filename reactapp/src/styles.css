@@ -124,7 +124,6 @@ body {
 .navbar-link:hover {
     color: var(--button-blue);
     cursor: pointer;
-    margin-bottom: 0.25rem;
 }
 
 .navbar-menu-icon:hover {

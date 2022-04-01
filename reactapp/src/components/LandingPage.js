@@ -11,7 +11,7 @@ const LandingPage = () => {
     const images = [Bench, Curl, Rope, Run];
 
     const handleStartSharingClick = () => {
-        history.push('/signin');
+        history.push('/signup');
     };
 
     const ref = firebase.firestore().collection('users');
