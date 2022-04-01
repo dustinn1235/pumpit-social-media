@@ -12,10 +12,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import { useAuth } from '../context/AuthContext';
-import { red } from '@material-ui/core/colors';
+import { red } from '@mui/material/colors';
 
 const SignUp = () => {
-
     const { signup } = useAuth();
     const history = useHistory();
 
@@ -51,24 +50,25 @@ const SignUp = () => {
     let validPassword = /^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%?=*&]).{8,})$/.test(values.password);
     let validPasswords = values.password === values.confirmpassword ? true : false;
 
-    let validForm = values.username !== '' && validPasswords && validPassword ? true : false;
+    let validForm = values.username !== '' && values.email !== '' && validPasswords && validPassword ? true : false;
 
+    let overallValidation = validForm && !loading ? true : false;
 
     const handleSignUpClick = async (e) => {
         e.preventDefault();
-        if(values.password !== values.confirmpassword){
-            return setError("Passwords do not match");
+        if (values.password !== values.confirmpassword) {
+            return setError('Passwords do not match');
         }
-        try{
+        try {
             setError('');
             setLoading(true);
             await signup(values.email, values.username, values.password);
-            history.push("/user/home");
-        } catch(err) {
+            history.push('/user/home');
+        } catch (err) {
             setError(err.message);
         }
         setLoading(false);
-    }
+    };
 
     return (
         <div className='sign-in-container'>
@@ -80,8 +80,8 @@ const SignUp = () => {
                         for a <span style={{ color: 'var(--top-grad)' }}>ProjectName</span> account
                     </div>
                 </div>
-                
-                <form className="sign-up-form" onSubmit={handleSignUpClick}>
+
+                <form className='sign-up-form' onSubmit={handleSignUpClick}>
                     <TextField style={{ marginTop: '2rem' }} value={values.email} onChange={handleChange('email')} id='outlined-basic' label='Email' variant='outlined' />
 
                     <TextField style={{ marginTop: '2rem' }} value={values.username} onChange={handleChange('username')} id='outlined-basic' label='Username' variant='outlined' />
@@ -127,19 +127,17 @@ const SignUp = () => {
                         />
                     </FormControl>
 
-                    {error && <p style={{color: red,}}>{error}</p>}
+                    {error && <p style={{ color: red }}>{error}</p>}
                     <Button
-                        disabled={loading}
-                        // onClick={handleSignUpClick}
-                        type="submit"
+                        disabled={overallValidation ? false : true}
                         style={{
                             textTransform: 'none',
                             borderRadius: '500px',
                             padding: '0.5rem 1rem',
                             width: '50%',
                             margin: '0 auto',
-                            backgroundColor: validForm && validPasswords ? 'var(--button-blue)' : 'gray',
-                            color: validForm && validPasswords ? 'white' : '#DCDCDC',
+                            backgroundColor: overallValidation ? 'var(--top-grad)' : 'var(--grey-blue)',
+                            color: overallValidation ? 'white' : '#DCDCDC',
                             fontFamily: 'Spartan-B',
                             fontSize: '1.25rem',
                         }}
@@ -147,45 +145,6 @@ const SignUp = () => {
                         Sign Up
                     </Button>
                 </form>
-
-//                 </Tooltip>
-
-//                 <FormControl style={{ margin: '2rem 0' }} variant='outlined'>
-//                     <InputLabel htmlFor='outlined-adornment-password'>Confirm Password</InputLabel>
-//                     <OutlinedInput
-//                         id='outlined-adornment-password'
-//                         type={values.showPassword ? 'text' : 'password'}
-//                         value={values.confirmpassword}
-//                         onChange={handleChange('confirmpassword')}
-//                         endAdornment={
-//                             <InputAdornment position='end'>
-//                                 <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge='end'>
-//                                     {values.showPassword ? <VisibilityOff /> : <Visibility />}
-//                                 </IconButton>
-//                             </InputAdornment>
-//                         }
-//                         label='Confirm Password'
-//                     />
-//                 </FormControl>
-
-//                 <Button
-//                     disabled={validForm && validPasswords ? false : true}
-//                     onClick={handleSignUpClick}
-//                     style={{
-//                         textTransform: 'none',
-//                         borderRadius: '500px',
-//                         padding: '0.5rem 1rem',
-//                         width: '50%',
-//                         margin: '0 auto',
-//                         backgroundColor: validForm && validPasswords ? 'var(--top-grad)' : 'var(--grey-blue)',
-//                         color: validForm && validPasswords ? 'white' : '#DCDCDC',
-//                         fontFamily: 'Spartan-B',
-//                         fontSize: '1.25rem',
-//                     }}
-//                     variant='contained'>
-//                     Sign Up
-//                 </Button>
-
 
                 <hr style={{ width: '100%', margin: '2rem 0' }} />
 

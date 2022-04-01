@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
-import { red } from '@material-ui/core/colors';
+import { red } from '@mui/material/colors';
 
 import { useAuth } from '../context/AuthContext';
 
@@ -23,7 +23,6 @@ const SignIn = () => {
     const [loading, setLoading] = useState(false);
 
     const [values, setValues] = React.useState({
-        username: '',
         email: '',
         password: '',
         showPassword: false,
@@ -44,21 +43,21 @@ const SignIn = () => {
         event.preventDefault();
     };
 
-    let validForm = values.username === '' || values.password === '' ? false : true;
+    let validForm = values.email === '' || values.password === '' ? false : true;
 
     const handleSignInClick = async (e) => {
         e.preventDefault();
 
-        try{
+        try {
             setError('');
             setLoading(true);
             await signin(values.email, values.password);
-            history.push("/user/home");
-        } catch(err){
+            history.push('/user/home');
+        } catch (err) {
             setError(err.message);
         }
         setLoading(false);
-    }
+    };
 
     const handleGoToSignUpClick = () => {
         history.push('/signup');
@@ -84,7 +83,7 @@ const SignIn = () => {
                 ) : null}
 
                 {/* New Version */}
-                <form className="sign-up-form" onSubmit={handleSignInClick}>
+                <form className='sign-up-form' onSubmit={handleSignInClick}>
                     <TextField style={{ marginTop: '2rem' }} value={values.email} onChange={handleChange('email')} id='outlined-basic' label='Email' variant='outlined' />
 
                     <FormControl style={{ margin: '2rem 0' }} variant='outlined'>
@@ -105,11 +104,11 @@ const SignIn = () => {
                         />
                     </FormControl>
 
-                    {error && <p style={{color: red,}}>{error}</p>}
+                    {error && <p style={{ color: red }}>{error}</p>}
                     <Button
                         disabled={validForm ? false : true}
-                        type="submit"
-                         style={{
+                        type='submit'
+                        style={{
                             textTransform: 'none',
                             borderRadius: '500px',
                             padding: '0.5rem 1rem',
@@ -124,7 +123,6 @@ const SignIn = () => {
                         Sign In
                     </Button>
                 </form>
-
 
                 <hr style={{ width: '100%', margin: '2rem 0' }} />
 

@@ -16,7 +16,7 @@ body {
     --button-blue: #193359;
     --top-grad: rgb(124, 166, 230);
     --bottom-grad: #bfd4f3;
-    --grey-blue: #51698C;
+    --grey-blue: #51698c;
 }
 
 /* Fonts */
@@ -48,7 +48,7 @@ body {
     width: 100%;
     height: 64px;
     background-color: var(--top-grad);
-    border-bottom: 10px solid #f4faff;
+    border-bottom: 3px solid #f4faff;
 }
 
 .navbar-icon-header-container {
@@ -73,14 +73,14 @@ body {
 
 .navbar-header {
     font-size: 2rem;
-    color: #f4faff;
+    color: white;
 }
 
 .navbar-link {
     font-size: 1.5rem;
     margin: 0 0.5rem;
     transition: 0.2s;
-    color: #f4faff;
+    color: white;
 }
 
 .navbar-link-clicked {
@@ -157,22 +157,8 @@ body {
     margin-top: 5rem;
 }
 
-.sign-in-button {
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 500px;
-    font-size: 1.25rem;
-    font-family: 'Spartan-B';
-    transition: all 0.2s ease-in;
-    width: 50%;
-    margin: 0 auto;
-}
-
-.sign-in-button:hover {
-    background-color: var(--button-blue);
-    color: white;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 6px 6px;
+.Button:disabled {
+    cursor: not-allowed;
 }
 
 .card-container {

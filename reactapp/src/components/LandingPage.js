@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Bench from '../images/bench.png';
 import Curl from '../images/curl.png';
 import Run from '../images/run.png';
@@ -22,7 +23,6 @@ const LandingPage = () => {
             querySnapshot.forEach((doc) => {
                 items.push(doc.data());
             });
-            setUsers(items);
         });
     }
 
@@ -30,7 +30,6 @@ const LandingPage = () => {
     function getUsers2() {
         ref.get().then((item) => {
             const items = item.docs.map((doc) => doc.data());
-            setUsers(items);
         });
     }
 
@@ -39,13 +38,15 @@ const LandingPage = () => {
         getUsers2();
     }, []);
 
-    console.log(users);
-
     return (
         <div className='landing-page-container'>
             <div>
-                <div className='landing-page-header' style={{color: "#193359", margin: "0px"}}>Workout,</div>
-                <div className='landing-page-header'>and start sharing daily!</div>
+                {/* <div className='landing-page-header' style={{ color: '#193359', margin: '0px' }}>
+                    Workout,
+                </div> */}
+                <div className='landing-page-header'>
+                    <span style={{ color: '#193359' }}>Workout, </span>and start sharing daily!
+                </div>
                 <div className='landing-page-subheader'>Get daily workout goals and compare your results against others.</div>
                 <button onClick={handleStartSharingClick} className='landing-page-button'>
                     JOIN NOW
