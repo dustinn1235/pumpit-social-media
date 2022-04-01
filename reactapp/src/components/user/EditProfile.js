@@ -166,7 +166,7 @@ const EditProfile = () => {
                                 <div style={{ fontFamily: 'Spartan-B', fontSize: '1.5rem', marginBottom: '0' }}>Password</div>
                                 <div>
                                     <FormControl style={{ marginTop: '0.5rem', width: '90%', fontFamily: 'Spartan-R' }} variant='standard'>
-                                        <InputLabel htmlFor='standard-adornment-password'>Password</InputLabel>
+                                        <InputLabel htmlFor='standard-adornment-password'>New Password</InputLabel>
                                         <Input
                                             id='standard-adornment-password'
                                             type={showPassword ? 'text' : 'password'}
@@ -183,7 +183,7 @@ const EditProfile = () => {
                                                     </IconButton>
                                                 </InputAdornment>
                                             }
-                                            label='Password'
+                                            label='New Password'
                                         />
                                     </FormControl>
                                 </div>

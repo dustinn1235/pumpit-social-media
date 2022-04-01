@@ -71,7 +71,7 @@ const SignIn = () => {
                     <img className='card-icon' src={Icon} alt='barbell' />
                     <div className='card-header'>Sign In</div>
                     <div className='card-sub-header'>
-                        to continue to <span style={{ color: 'var(--button-blue)' }}>ProjectName</span>
+                        to continue to <span style={{ color: 'var(--top-grad)' }}>ProjectName</span>
                     </div>
                 </div>
 
@@ -82,6 +82,7 @@ const SignIn = () => {
                         </div>
                     </div>
                 ) : null}
+
                 {/* New Version */}
                 <form className="sign-up-form" onSubmit={handleSignInClick}>
                     <TextField style={{ marginTop: '2rem' }} value={values.email} onChange={handleChange('email')} id='outlined-basic' label='Email' variant='outlined' />
@@ -106,17 +107,16 @@ const SignIn = () => {
 
                     {error && <p style={{color: red,}}>{error}</p>}
                     <Button
-                        // disabled={validForm && !loading ? false : true}
-                        // onClick={handleSignUpClick}
+                        disabled={validForm ? false : true}
                         type="submit"
-                        style={{
+                         style={{
                             textTransform: 'none',
                             borderRadius: '500px',
                             padding: '0.5rem 1rem',
                             width: '50%',
                             margin: '0 auto',
-                            backgroundColor: 'gray',
-                            color: '#DCDCDC',
+                            backgroundColor: validForm ? 'var(--top-grad)' : 'var(--grey-blue)',
+                            color: validForm ? 'white' : '#DCDCDC',
                             fontFamily: 'Spartan-B',
                             fontSize: '1.25rem',
                         }}
@@ -125,11 +125,12 @@ const SignIn = () => {
                     </Button>
                 </form>
 
+
                 <hr style={{ width: '100%', margin: '2rem 0' }} />
 
                 <div className='helper-text-container'>
                     <div className='helper-header'>Don't have an account?</div>
-                    <div onClick={handleGoToSignUpClick} className='helper-link'>
+                    <div onClick={handleGoToSignUpClick} className='helper-link' style={{ color: 'var(--top-grad)' }}>
                         Sign Up
                     </div>
                     {/* <Link to="/signup">Sign Up</Link> */}

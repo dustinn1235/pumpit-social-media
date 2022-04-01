@@ -77,7 +77,7 @@ const SignUp = () => {
                     <img className='card-icon' src={Icon} alt='barbell' />
                     <div className='card-header'>Sign Up</div>
                     <div className='card-sub-header'>
-                        for a <span style={{ color: 'var(--button-blue)' }}>ProjectName</span> account
+                        for a <span style={{ color: 'var(--top-grad)' }}>ProjectName</span> account
                     </div>
                 </div>
                 
@@ -126,6 +126,7 @@ const SignUp = () => {
                             label='Confirm Password'
                         />
                     </FormControl>
+
                     {error && <p style={{color: red,}}>{error}</p>}
                     <Button
                         disabled={loading}
@@ -147,11 +148,50 @@ const SignUp = () => {
                     </Button>
                 </form>
 
+//                 </Tooltip>
+
+//                 <FormControl style={{ margin: '2rem 0' }} variant='outlined'>
+//                     <InputLabel htmlFor='outlined-adornment-password'>Confirm Password</InputLabel>
+//                     <OutlinedInput
+//                         id='outlined-adornment-password'
+//                         type={values.showPassword ? 'text' : 'password'}
+//                         value={values.confirmpassword}
+//                         onChange={handleChange('confirmpassword')}
+//                         endAdornment={
+//                             <InputAdornment position='end'>
+//                                 <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge='end'>
+//                                     {values.showPassword ? <VisibilityOff /> : <Visibility />}
+//                                 </IconButton>
+//                             </InputAdornment>
+//                         }
+//                         label='Confirm Password'
+//                     />
+//                 </FormControl>
+
+//                 <Button
+//                     disabled={validForm && validPasswords ? false : true}
+//                     onClick={handleSignUpClick}
+//                     style={{
+//                         textTransform: 'none',
+//                         borderRadius: '500px',
+//                         padding: '0.5rem 1rem',
+//                         width: '50%',
+//                         margin: '0 auto',
+//                         backgroundColor: validForm && validPasswords ? 'var(--top-grad)' : 'var(--grey-blue)',
+//                         color: validForm && validPasswords ? 'white' : '#DCDCDC',
+//                         fontFamily: 'Spartan-B',
+//                         fontSize: '1.25rem',
+//                     }}
+//                     variant='contained'>
+//                     Sign Up
+//                 </Button>
+
+
                 <hr style={{ width: '100%', margin: '2rem 0' }} />
 
                 <div className='helper-text-container'>
                     <div className='helper-header'>Already have an account?</div>
-                    <div onClick={handleGoToSignInClick} className='helper-link'>
+                    <div onClick={handleGoToSignInClick} className='helper-link' style={{ color: 'var(--top-grad)' }}>
                         Sign In
                     </div>
                 </div>
