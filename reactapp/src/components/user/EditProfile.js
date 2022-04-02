@@ -107,7 +107,7 @@ const EditProfile = () => {
                             textTransform: 'none',
                             borderRadius: '500px',
                             padding: '0.5rem 1rem',
-                            backgroundColor: 'white',
+                            backgroundColor: '#f4faff',
                             color: 'var(--button-blue)',
                             fontFamily: 'Spartan-R',
                             fontSize: '1rem',

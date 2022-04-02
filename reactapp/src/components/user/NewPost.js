@@ -88,20 +88,22 @@ const NewPost = () => {
                         </div>
                     )}
                     <div>
-                        <TextField
-                            value={values.description}
-                            onChange={handleChange('description')}
-                            id='outlined-basic'
-                            label='Description'
-                            variant='outlined'
-                            multiline
-                            rows={3}
-                            style={{ width: '20rem', marginBottom: '1rem' }}
-                            required
-                        />
-                        <div>
+                        <div style={{ marginBottom: '1rem' }}>
                             <TextField
-                                style={{ width: '20rem', marginBottom: '1rem' }}
+                                value={values.description}
+                                onChange={handleChange('description')}
+                                id='outlined-basic'
+                                label='Description'
+                                variant='outlined'
+                                multiline
+                                rows={3}
+                                classes={{ root: 'mobileLargeContainerSizing' }}
+                                required
+                            />
+                        </div>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <TextField
+                                classes={{ root: 'mobileLargeContainerSizing' }}
                                 value={values.workoutType}
                                 label='Workout Type'
                                 onChange={handleChange('workoutType')}
@@ -118,37 +120,41 @@ const NewPost = () => {
                                 <MenuItem value={'glutes'}>Glutes</MenuItem>
                             </TextField>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div className='reps-and-set-container' style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <TextField style={{ width: '7rem', marginRight: '0.25rem' }} value={values.reps} label='Reps' onChange={handleChange('reps')} select required>
-                                    <MenuItem value={'1'}>1</MenuItem>
-                                    <MenuItem value={'2'}>2</MenuItem>
-                                    <MenuItem value={'3'}>3</MenuItem>
-                                    <MenuItem value={'4'}>4</MenuItem>
-                                    <MenuItem value={'5'}>5</MenuItem>
-                                    <MenuItem value={'6'}>6</MenuItem>
-                                    <MenuItem value={'7'}>7</MenuItem>
-                                    <MenuItem value={'8'}>8</MenuItem>
-                                    <MenuItem value={'9'}>9</MenuItem>
-                                    <MenuItem value={'10'}>10</MenuItem>
-                                </TextField>
+                                <div style={{ marginRight: '0.25rem' }}>
+                                    <TextField classes={{ root: 'mobileContainerSizing' }} value={values.reps} label='Reps' onChange={handleChange('reps')} select required>
+                                        <MenuItem value={'1'}>1</MenuItem>
+                                        <MenuItem value={'2'}>2</MenuItem>
+                                        <MenuItem value={'3'}>3</MenuItem>
+                                        <MenuItem value={'4'}>4</MenuItem>
+                                        <MenuItem value={'5'}>5</MenuItem>
+                                        <MenuItem value={'6'}>6</MenuItem>
+                                        <MenuItem value={'7'}>7</MenuItem>
+                                        <MenuItem value={'8'}>8</MenuItem>
+                                        <MenuItem value={'9'}>9</MenuItem>
+                                        <MenuItem value={'10'}>10</MenuItem>
+                                    </TextField>
+                                </div>
                                 <Tooltip title='A rep is the number of times you perform a specific exercise'>
                                     <Help style={{ color: 'gray' }} />
                                 </Tooltip>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <TextField style={{ width: '7rem', marginRight: '0.25rem' }} value={values.sets} label='Sets' onChange={handleChange('sets')} select required>
-                                    <MenuItem value={'1'}>1</MenuItem>
-                                    <MenuItem value={'2'}>2</MenuItem>
-                                    <MenuItem value={'3'}>3</MenuItem>
-                                    <MenuItem value={'4'}>4</MenuItem>
-                                    <MenuItem value={'5'}>5</MenuItem>
-                                    <MenuItem value={'6'}>6</MenuItem>
-                                    <MenuItem value={'7'}>7</MenuItem>
-                                    <MenuItem value={'8'}>8</MenuItem>
-                                    <MenuItem value={'9'}>9</MenuItem>
-                                    <MenuItem value={'10'}>10</MenuItem>
-                                </TextField>
+                                <div style={{ marginRight: '0.25rem' }}>
+                                    <TextField classes={{ root: 'mobileContainerSizing' }} value={values.sets} label='Sets' onChange={handleChange('sets')} select required>
+                                        <MenuItem value={'1'}>1</MenuItem>
+                                        <MenuItem value={'2'}>2</MenuItem>
+                                        <MenuItem value={'3'}>3</MenuItem>
+                                        <MenuItem value={'4'}>4</MenuItem>
+                                        <MenuItem value={'5'}>5</MenuItem>
+                                        <MenuItem value={'6'}>6</MenuItem>
+                                        <MenuItem value={'7'}>7</MenuItem>
+                                        <MenuItem value={'8'}>8</MenuItem>
+                                        <MenuItem value={'9'}>9</MenuItem>
+                                        <MenuItem value={'10'}>10</MenuItem>
+                                    </TextField>
+                                </div>
                                 <Tooltip title='A set is the number of cycles of reps that you complete'>
                                     <Help style={{ color: 'gray' }} />
                                 </Tooltip>

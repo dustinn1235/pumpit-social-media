@@ -15,6 +15,8 @@ const Navbar = () => {
     const { signout, currentUser } = useAuth();
     const [error, setError] = useState('');
 
+    console.log(currentUser);
+
     const isMobile = useMediaQuery('(max-width:500px)');
 
     const [toggleMenu, setToggleMenu] = useState(false);

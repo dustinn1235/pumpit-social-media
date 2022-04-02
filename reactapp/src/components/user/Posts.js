@@ -108,6 +108,7 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                     <div style={{ display: 'flex' }}>
                         <Comment style={{ marginRight: '1rem' }} />
                         <input
+                            style={{ backgroundColor: '#f4faff' }}
                             className='comment-input'
                             placeholder='Add a comment...'
                             onKeyPress={(e) => e.key === 'Enter' && handlePostClick()}

@@ -5,10 +5,13 @@ import Run from '../images/run.png';
 import Rope from '../images/rope.png';
 import { useHistory } from 'react-router-dom';
 import firebase from '../firebase';
+import { useAuth } from '../context/AuthContext';
 
 const LandingPage = () => {
     const history = useHistory();
     const images = [Bench, Curl, Rope, Run];
+
+    const { currentUser } = useAuth();
 
     const handleStartSharingClick = () => {
         history.push('/signup');
@@ -36,6 +39,9 @@ const LandingPage = () => {
     useEffect(() => {
         // getUsers();
         getUsers2();
+        if (currentUser !== null) {
+            history.push('/user/home');
+        }
     }, []);
 
     return (
