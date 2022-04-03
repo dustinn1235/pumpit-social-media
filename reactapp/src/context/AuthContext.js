@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-
 import { auth } from '../firebase';
+import { updateProfile } from "firebase/auth";
 
 const AuthContext = React.createContext();
 
@@ -13,14 +13,12 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     function signup(email, username, password) {
-        return auth.createUserWithEmailAndPassword(email, password);
-
-        // need a updateProfile import or something to get the username in the db as well
-        // .then(() => {
-        //     auth.updateProfile(auth.currentUser, {
-        //         displayName: username,
-        //     })
-        // });
+        return auth.createUserWithEmailAndPassword(email, password).then(() => 
+        {
+            updateProfile(auth.currentUser, {
+                displayName: username,
+            })
+        });
     }
 
     function signin(email, password) {

@@ -114,7 +114,7 @@ const Profile = () => {
                         src='https://thumbs.dreamstime.com/b/profile-icon-male-avatar-portrait-casual-person-silhouette-face-flat-design-vector-46846325.jpg'
                         alt='avatar'
                     />
-                    <div className='profile-header'>{currentUser.email}</div>
+                    <div className='profile-header'>{currentUser.displayName}</div>
                     <div className='profile-edit-button'>
                         <Button
                             onClick={handleEditProfileClick}
