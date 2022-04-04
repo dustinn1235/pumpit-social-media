@@ -41,7 +41,7 @@ const NewPost = () => {
     return (
         <div className='workout-container'>
             <div className='card-container'>
-                <div style={{ marginBottom: '0.5rem' }} className='workout-header'>
+                <div style={{ marginBottom: '0.5rem', color: 'var(--button-blue)' }} className='workout-header'>
                     New Post
                 </div>
                 <div className='workout-helper-text'>Fill in the following fields to generate a post</div>
@@ -137,7 +137,7 @@ const NewPost = () => {
                                     </TextField>
                                 </div>
                                 <Tooltip title='A rep is the number of times you perform a specific exercise'>
-                                    <Help style={{ color: 'gray' }} />
+                                    <Help style={{ color: 'var(--button-blue)' }} />
                                 </Tooltip>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -156,7 +156,7 @@ const NewPost = () => {
                                     </TextField>
                                 </div>
                                 <Tooltip title='A set is the number of cycles of reps that you complete'>
-                                    <Help style={{ color: 'gray' }} />
+                                    <Help style={{ color: 'var(--button-blue)' }} />
                                 </Tooltip>
                             </div>
                         </div>

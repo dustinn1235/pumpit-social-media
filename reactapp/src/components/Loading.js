@@ -18,7 +18,7 @@ export const Loading = (props) => {
             <span style={{ marginTop: '0.25rem' }}>
                 <ScaleLoader height={25} width={2} margin={3} color={color} loading={loading} />
             </span>
-            <span style={{ marginLeft: '1rem', fontFamily: 'Spartan-R', fontSize: '2rem' }}>Loading...</span>
+            <span style={{ marginLeft: '1rem', fontFamily: 'Spartan-R', fontSize: '2rem', color: 'White' }}>Loading...</span>
         </div>
     );
 };

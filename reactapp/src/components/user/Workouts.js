@@ -289,7 +289,7 @@ const Workouts = () => {
                 </div>
             ) : (
                 <div className='card-container'>
-                    <div className='workout-header'>Workouts</div>
+                    <div className='workout-header' style={{ color: 'var(--button-blue)' }}>Workouts</div>
                     <div className='workout-helper-text'>Select the muscle groups you want to work out</div>
                     <div className='check-box-container'>
                         {muscleGroups.map((muscle) => {
