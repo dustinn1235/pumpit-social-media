@@ -35,7 +35,7 @@ const Posts = ({ id, username, image, date, description, comments }) => {
         // TODO send post information to DB (username, comment)
 
         // Displays comments that the current user has just made right away
-        setMyComments([...myComments, { username: currentUser && currentUser.email, comment: commentValue }]);
+        setMyComments([...myComments, { username: currentUser && currentUser.displayName, comment: commentValue }]);
         setShowMyComments(true);
 
         // Make a call to the DB to get all the comments on that post
