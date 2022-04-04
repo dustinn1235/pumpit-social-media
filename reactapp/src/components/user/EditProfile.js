@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react';
-import AppContext from '../../context/AppContext';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
@@ -23,7 +22,7 @@ const EditProfile = () => {
 
     const [imageUpload, setImageUpload] = useState('');
 
-    const [editUsername, setEditUsername] = useState(currentUser.email);
+    const [editUsername, setEditUsername] = useState(currentUser.displayName);
     const [editUsernameBool, setEditUsernameBool] = useState(false);
 
     const [editPassword, setEditPassword] = useState('');

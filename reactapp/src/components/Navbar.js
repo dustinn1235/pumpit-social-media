@@ -11,7 +11,6 @@ import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 
 const Navbar = () => {
-    // const { isSignedIn, setIsSignedIn } = useContext(AppContext);
     const { signout, currentUser } = useAuth();
     const [error, setError] = useState('');
 
