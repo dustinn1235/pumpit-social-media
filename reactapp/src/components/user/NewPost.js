@@ -5,6 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Help from '@mui/icons-material/HelpOutline';
 import MenuItem from '@mui/material/MenuItem';
 import { useHistory } from 'react-router-dom';
+import { storage } from '../../firebase';
 
 const NewPost = () => {
     // History variable is used to update the path of the site
@@ -30,11 +31,30 @@ const NewPost = () => {
     };
 
     const handleUploadedFiles = (e) => {
-        setImageUpload(URL.createObjectURL(e.target.files[0]));
+        if (e.target.files[0]) {
+            setImageUpload(e.target.files[0]);
+        }
     };
 
     const handlePostClick = () => {
         // TODO Make a database post with the "values" object and "imageUpload" object
+        const uploadTask = storage.ref(`images/${imageUpload.name}`).put(imageUpload);
+        uploadTask.on(
+            "state_changed",
+            snapshot => { },
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref("images")
+                    .child(imageUpload.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        console.log(url);
+                    });
+            }
+        )
         history.push('/user/home');
     };
 
