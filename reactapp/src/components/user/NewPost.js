@@ -12,6 +12,7 @@ const NewPost = () => {
     const history = useHistory();
 
     const [imageUpload, setImageUpload] = useState('');
+    const [imagePreview, setImagePreview] = useState('');
 
     const [values, setValues] = React.useState({
         description: '',
@@ -32,6 +33,7 @@ const NewPost = () => {
 
     const handleUploadedFiles = (e) => {
         if (e.target.files[0]) {
+            setImagePreview(URL.createObjectURL(e.target.files[0]));
             setImageUpload(e.target.files[0]);
         }
     };
@@ -40,21 +42,21 @@ const NewPost = () => {
         // TODO Make a database post with the "values" object and "imageUpload" object
         const uploadTask = storage.ref(`images/${imageUpload.name}`).put(imageUpload);
         uploadTask.on(
-            "state_changed",
-            snapshot => { },
-            error => {
+            'state_changed',
+            (snapshot) => {},
+            (error) => {
                 console.log(error);
             },
             () => {
                 storage
-                    .ref("images")
+                    .ref('images')
                     .child(imageUpload.name)
                     .getDownloadURL()
-                    .then(url => {
+                    .then((url) => {
                         console.log(url);
                     });
-            }
-        )
+            },
+        );
         history.push('/user/home');
     };
 
@@ -67,9 +69,9 @@ const NewPost = () => {
                 <div className='workout-helper-text'>Fill in the following fields to generate a post</div>
 
                 <div className='post-content-container'>
-                    {imageUpload !== '' ? (
+                    {imagePreview !== '' ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <img className='new-post-image-preview' src={imageUpload} alt='imageUpload' />
+                            <img className='new-post-image-preview' src={imagePreview} alt='imageUpload' />
                             <Button
                                 onClick={handleChangeImage}
                                 style={{
