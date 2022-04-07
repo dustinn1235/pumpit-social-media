@@ -177,7 +177,7 @@ const EditProfile = () => {
                                 <img className='profile-avatar-image' src={imagePreview} alt='avatar' />
                             ) : (
                                 <div className='profile-avatar-loading'>
-                                    <PulseLoader size={20} margin={7} color={'var(--button-blue)'} loading={true} />
+                                    <PulseLoader size={19} margin={7} color={'var(--button-blue)'} loading={true} />
                                 </div>
                             )}
                         </>

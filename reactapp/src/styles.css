@@ -395,7 +395,6 @@ body {
     width: 250px;
     height: 250px;
     object-fit: cover;
-    border: 1px solid var(--grey-blue);
     border-radius: 5px;
 }
 
