@@ -15,7 +15,7 @@ body {
 :root {
     --button-blue: #193359;
     --top-grad: rgb(124, 166, 230);
-    --bottom-grad: #bfd4f3;
+    --bottom-grad: #d4e2f7;
     --grey-blue: #51698c;
 }
 
@@ -481,10 +481,6 @@ body {
     line-height: 110%;
 }
 
-.show-workouts-content {
-    margin-bottom: 2rem;
-}
-
 .show-workouts-subheader {
     font-size: 1.5rem;
     font-family: 'Spartan-B';
@@ -495,6 +491,11 @@ body {
 .show-workouts-chosen {
     font-size: 1.25rem;
     font-family: 'Spartan-R';
+    margin-bottom: 0.5rem;
+}
+
+.show-workouts-descr {
+    margin-bottom: 0.5rem;
 }
 
 .workouts-grid {

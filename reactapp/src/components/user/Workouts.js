@@ -5,7 +5,7 @@ import { db } from '../../firebase';
 const Workouts = () => {
     // TODO Need to get images/videos to support each different workout
     // TODO Need to get descriptions for each workout.
-    // const [muscleCols, setMuscleCols] = useState({});    
+    // const [muscleCols, setMuscleCols] = useState({});
 
     // Different types of muscles
     const muscleGroups = ['Chest', 'Back', 'Biceps', 'Triceps', 'Shoulders', 'Quads', 'Hamstrings', 'Calfs', 'Glutes'];
@@ -127,11 +127,14 @@ const Workouts = () => {
 
     let musclesCollection = {};
     const getData = async () => {
-        await db.collection('muscles').get().then((snapshot) => {
-            snapshot.docs.forEach(doc => {
-                musclesCollection[doc.id] = doc.data();
+        await db
+            .collection('muscles')
+            .get()
+            .then((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+                    musclesCollection[doc.id] = doc.data();
+                });
             });
-        })
     };
 
     // Toggle the muscle button that was clicked
@@ -230,36 +233,26 @@ const Workouts = () => {
 
     // When showing the workouts UI, pick a workout at random
     const getWorkout = (muscleType) => {
-        let exerciseName = "";
         let index = 0;
-    
+
         if (muscleType === 'Chest') {
             index = Math.floor(Math.random() * chestWorkouts.length);
-            exerciseName = chestWorkouts[index];
         } else if (muscleType === 'Back') {
             index = Math.floor(Math.random() * backWorkouts.length);
-            exerciseName = backWorkouts[index];
         } else if (muscleType === 'Biceps') {
             index = Math.floor(Math.random() * bicepWorkouts.length);
-            exerciseName = bicepWorkouts[index];
         } else if (muscleType === 'Triceps') {
             index = Math.floor(Math.random() * tricepWorkouts.length);
-            exerciseName = tricepWorkouts[index];
         } else if (muscleType === 'Shoulders') {
             index = Math.floor(Math.random() * shoulderWorkouts.length);
-            exerciseName = shoulderWorkouts[index];
         } else if (muscleType === 'Quads') {
             index = Math.floor(Math.random() * quadWorkouts.length);
-            exerciseName = quadWorkouts[index];
         } else if (muscleType === 'Hamstrings') {
             index = Math.floor(Math.random() * hamstringWorkouts.length);
-            exerciseName = hamstringWorkouts[index];
         } else if (muscleType === 'Calfs') {
             index = Math.floor(Math.random() * calfWorkouts.length);
-            exerciseName = calfWorkouts[index];
         } else if (muscleType === 'Glutes') {
             index = Math.floor(Math.random() * gluteWorkouts.length);
-            exerciseName = gluteWorkouts[index];
         }
         return index;
     };
@@ -276,99 +269,83 @@ const Workouts = () => {
                     <div className='workouts-grid'>
                         {chestBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Chest</div>
-                                    <div className='show-workouts-chosen'>{chestEx.name}</div>
-                                    <div className='show-workouts-descr'>{chestEx.descr}</div>
-                                    <iframe title='Chest Tut' src={chestEx.vidURL}></iframe>
-                                </div>
+                                <div className='show-workouts-subheader'>Chest</div>
+                                <div className='show-workouts-chosen'>{chestEx.name}</div>
+                                <div className='show-workouts-descr'>{chestEx.descr}</div>
+                                <iframe title='Chest Tut' src={chestEx.vidURL} />
                             </div>
                         ) : null}
                         {backBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Back</div>
-                                    <div className='show-workouts-chosen'>{backEx.name}</div>
-                                    <div className='show-workouts-descr'>{backEx.descr}</div>
-                                    <iframe title='Back Tut' src={backEx.vidURL}></iframe>
-                                </div>
+                                <div className='show-workouts-subheader'>Back</div>
+                                <div className='show-workouts-chosen'>{backEx.name}</div>
+                                <div className='show-workouts-descr'>{backEx.descr}</div>
+                                <iframe title='Back Tut' src={backEx.vidURL} />
                             </div>
                         ) : null}
                         {bicepsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Biceps</div>
-                                    <div className='show-workouts-chosen'>{bicepEx.name}</div>
-                                    <div className='show-workouts-descr'>{bicepEx.descr}</div>
-                                    <iframe title='Bicep Tut' src={bicepEx.vidURL}></iframe>
-                                </div>
+                                <div className='show-workouts-subheader'>Biceps</div>
+                                <div className='show-workouts-chosen'>{bicepEx.name}</div>
+                                <div className='show-workouts-descr'>{bicepEx.descr}</div>
+                                <iframe title='Bicep Tut' src={bicepEx.vidURL} />
                             </div>
                         ) : null}
                         {tricepsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Triceps</div>
-                                    <div className='show-workouts-chosen'>{tricepEx.name}</div>
-                                    <div className='show-workouts-descr'>{tricepEx.descr}</div>
-                                    <iframe title='Tricep Tut' src={tricepEx.vidURL}></iframe>
-                                </div>
+                                <div className='show-workouts-subheader'>Triceps</div>
+                                <div className='show-workouts-chosen'>{tricepEx.name}</div>
+                                <div className='show-workouts-descr'>{tricepEx.descr}</div>
+                                <iframe title='Tricep Tut' src={tricepEx.vidURL} />
                             </div>
                         ) : null}
                         {shouldersBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Shoulders</div>
-                                    <div className='show-workouts-chosen'>{shoulderEx.name}</div>
-                                    <div className='show-workouts-descr'>{shoulderEx.descr}</div>
-                                    <iframe title='Shoulder Tut' src={shoulderEx.vidURL}></iframe>
-                                </div>
+                                <div className='show-workouts-subheader'>Shoulders</div>
+                                <div className='show-workouts-chosen'>{shoulderEx.name}</div>
+                                <div className='show-workouts-descr'>{shoulderEx.descr}</div>
+                                <iframe title='Shoulder Tut' src={shoulderEx.vidURL} />
                             </div>
                         ) : null}
                         {quadsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Quads</div>
-                                    <div className='show-workouts-chosen'>{quadEx.name}</div>
-                                    <div className='show-workouts-descr'>{quadEx.descr}</div>
-                                    <iframe title='Quad Tut' src={quadEx.vidURL}></iframe>
-                                </div>
+                                <div className='show-workouts-subheader'>Quads</div>
+                                <div className='show-workouts-chosen'>{quadEx.name}</div>
+                                <div className='show-workouts-descr'>{quadEx.descr}</div>
+                                <iframe title='Quad Tut' src={quadEx.vidURL} />
                             </div>
                         ) : null}
                         {hamstringsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Hamstrings</div>
-                                    <div className='show-workouts-chosen'>{hamstringEx.name}</div>
-                                    <div className='show-workouts-descr'>{hamstringEx.descr}</div>
-                                    <iframe title='Hamstring Tut' src={hamstringEx.vidURL}></iframe>
-                                </div>
+                                <div className='show-workouts-subheader'>Hamstrings</div>
+                                <div className='show-workouts-chosen'>{hamstringEx.name}</div>
+                                <div className='show-workouts-descr'>{hamstringEx.descr}</div>
+                                <iframe title='Hamstring Tut' src={hamstringEx.vidURL} />
                             </div>
                         ) : null}
                         {calfsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Calfs</div>
-                                    <div className='show-workouts-chosen'>{calfEx.name}</div>
-                                    <div className='show-workouts-descr'>{calfEx.descr}</div>
-                                    <iframe title='Calf Tut' src={calfEx.vidURL}></iframe>
-                                </div>
+                                <div className='show-workouts-subheader'>Calfs</div>
+                                <div className='show-workouts-chosen'>{calfEx.name}</div>
+                                <div className='show-workouts-descr'>{calfEx.descr}</div>
+                                <iframe title='Calf Tut' src={calfEx.vidURL} />
                             </div>
                         ) : null}
                         {glutesBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Glutes</div>
-                                    <div className='show-workouts-chosen'>{gluteEx.name}</div>
-                                    <div className='show-workouts-descr'>{gluteEx.descr}</div>
-                                    <iframe title='Glute Tut' src={gluteEx.vidURL}></iframe>
-                                </div>
+                                <div className='show-workouts-subheader'>Glutes</div>
+                                <div className='show-workouts-chosen'>{gluteEx.name}</div>
+                                <div className='show-workouts-descr'>{gluteEx.descr}</div>
+                                <iframe title='Glute Tut' src={gluteEx.vidURL} />
                             </div>
                         ) : null}
                     </div>
                 </div>
             ) : (
                 <div className='card-container'>
-                    <div className='workout-header' style={{ color: 'var(--button-blue)' }}>Workouts</div>
+                    <div className='workout-header' style={{ color: 'var(--button-blue)' }}>
+                        Workouts
+                    </div>
                     <div className='workout-helper-text'>Select the muscle groups you want to work out</div>
                     <div className='check-box-container'>
                         {muscleGroups.map((muscle) => {
