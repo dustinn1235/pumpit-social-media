@@ -280,7 +280,7 @@ const Workouts = () => {
                                     <div className='show-workouts-subheader'>Chest</div>
                                     <div className='show-workouts-chosen'>{chestEx.name}</div>
                                     <div className='show-workouts-descr'>{chestEx.descr}</div>
-                                    <iframe src={chestEx.vidURL}></iframe>
+                                    <iframe title='Chest Tut' src={chestEx.vidURL}></iframe>
                                 </div>
                             </div>
                         ) : null}
@@ -290,7 +290,7 @@ const Workouts = () => {
                                     <div className='show-workouts-subheader'>Back</div>
                                     <div className='show-workouts-chosen'>{backEx.name}</div>
                                     <div className='show-workouts-descr'>{backEx.descr}</div>
-                                    <iframe src={backEx.vidURL}></iframe>
+                                    <iframe title='Back Tut' src={backEx.vidURL}></iframe>
                                 </div>
                             </div>
                         ) : null}
@@ -300,7 +300,7 @@ const Workouts = () => {
                                     <div className='show-workouts-subheader'>Biceps</div>
                                     <div className='show-workouts-chosen'>{bicepEx.name}</div>
                                     <div className='show-workouts-descr'>{bicepEx.descr}</div>
-                                    <iframe src={bicepEx.vidURL}></iframe>
+                                    <iframe title='Bicep Tut' src={bicepEx.vidURL}></iframe>
                                 </div>
                             </div>
                         ) : null}
@@ -310,7 +310,7 @@ const Workouts = () => {
                                     <div className='show-workouts-subheader'>Triceps</div>
                                     <div className='show-workouts-chosen'>{tricepEx.name}</div>
                                     <div className='show-workouts-descr'>{tricepEx.descr}</div>
-                                    <iframe src={tricepEx.vidURL}></iframe>
+                                    <iframe title='Tricep Tut' src={tricepEx.vidURL}></iframe>
                                 </div>
                             </div>
                         ) : null}
@@ -320,7 +320,7 @@ const Workouts = () => {
                                     <div className='show-workouts-subheader'>Shoulders</div>
                                     <div className='show-workouts-chosen'>{shoulderEx.name}</div>
                                     <div className='show-workouts-descr'>{shoulderEx.descr}</div>
-                                    <iframe src={shoulderEx.vidURL}></iframe>
+                                    <iframe title='Shoulder Tut' src={shoulderEx.vidURL}></iframe>
                                 </div>
                             </div>
                         ) : null}
@@ -330,7 +330,7 @@ const Workouts = () => {
                                     <div className='show-workouts-subheader'>Quads</div>
                                     <div className='show-workouts-chosen'>{quadEx.name}</div>
                                     <div className='show-workouts-descr'>{quadEx.descr}</div>
-                                    <iframe src={quadEx.vidURL}></iframe>
+                                    <iframe title='Quad Tut' src={quadEx.vidURL}></iframe>
                                 </div>
                             </div>
                         ) : null}
@@ -340,7 +340,7 @@ const Workouts = () => {
                                     <div className='show-workouts-subheader'>Hamstrings</div>
                                     <div className='show-workouts-chosen'>{hamstringEx.name}</div>
                                     <div className='show-workouts-descr'>{hamstringEx.descr}</div>
-                                    <iframe src={hamstringEx.vidURL}></iframe>
+                                    <iframe title='Hamstring Tut' src={hamstringEx.vidURL}></iframe>
                                 </div>
                             </div>
                         ) : null}
@@ -350,7 +350,7 @@ const Workouts = () => {
                                     <div className='show-workouts-subheader'>Calfs</div>
                                     <div className='show-workouts-chosen'>{calfEx.name}</div>
                                     <div className='show-workouts-descr'>{calfEx.descr}</div>
-                                    <iframe src={calfEx.vidURL}></iframe>
+                                    <iframe title='Calf Tut' src={calfEx.vidURL}></iframe>
                                 </div>
                             </div>
                         ) : null}
@@ -360,7 +360,7 @@ const Workouts = () => {
                                     <div className='show-workouts-subheader'>Glutes</div>
                                     <div className='show-workouts-chosen'>{gluteEx.name}</div>
                                     <div className='show-workouts-descr'>{gluteEx.descr}</div>
-                                    <iframe src={gluteEx.vidURL}></iframe>
+                                    <iframe title='Glute Tut' src={gluteEx.vidURL}></iframe>
                                 </div>
                             </div>
                         ) : null}
