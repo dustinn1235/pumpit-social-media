@@ -15,12 +15,23 @@ import IconButton from '@mui/material/IconButton';
 import Box from '@mui/icons-material/CheckBoxOutlineBlank';
 import Typography from '@mui/material/Typography';
 import { useAuth } from '../../context/AuthContext';
+import { storage } from '../../firebase';
 
 const EditProfile = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, updatePassword, updateUsername } = useAuth();
     const history = useHistory();
 
     const [imageUpload, setImageUpload] = useState('');
+    const [imagePreview, setImagePreview] = useState('');
+
+    storage
+        .ref(`profile/${currentUser.displayName}`)
+        .child('avatar.png')
+        .getDownloadURL()
+        .then((url) => {
+            setImagePreview(url);
+        })
+        .catch((e) => console.log('Errors while downloading => ', e));
 
     const [editUsername, setEditUsername] = useState(currentUser.displayName);
     const [editUsernameBool, setEditUsernameBool] = useState(false);
@@ -31,15 +42,41 @@ const EditProfile = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [editConfirmPassword, setEditConfirmPassword] = useState('');
 
+    const [responseMsg, setResponseMsg] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const initialValues = {
-        username: currentUser.email,
+        username: currentUser.displayName,
         password: currentUser.password,
     };
 
     const handleUploadedFiles = (e) => {
-        // TODO Figure out how to upload the image file to the database (imageUpload)
-        setImageUpload(URL.createObjectURL(e.target.files[0]));
+        if (e.target.files[0]) {
+            setImagePreview(URL.createObjectURL(e.target.files[0]));
+            setImageUpload(e.target.files[0]);
+        }
     };
+
+    const handleProfilePictureUpload = () => {
+        // TODO Add button to confirm upload
+        const uploadTask = storage.ref(`profile/${currentUser.displayName}/${imageUpload.name}`).put(imageUpload);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => { },
+            (error) => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref(`profile/${currentUser.displayName}`)
+                    .child('avatar.png')
+                    .getDownloadURL()
+                    .then((url) => {
+                        console.log(url);
+                    });
+            },
+        );
+    }
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -58,19 +95,55 @@ const EditProfile = () => {
         }
     };
 
+    let validPassword = /^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%?=*&]).{8,})$/.test(editPassword);
+    let validPasswords = editPassword === editConfirmPassword ? true : false;
+
+    let validFormPassword = validPasswords && validPassword ? true : false;
+
+    let overallValidation = validFormPassword && !loading ? true : false;
+
+    // Update the password
+    const handleUpdatePassword = async () => {
+        if (editPassword !== editConfirmPassword) {
+            return setResponseMsg('Passwords do not match');
+        }
+        try {
+            setResponseMsg('');
+            setLoading(true);
+            await updatePassword(editPassword);
+            // history.push('/user/home');
+            setResponseMsg('Password Updated!')
+            setEditPasswordBool(false);
+        } catch (err) {
+            setResponseMsg("Error updating password, please try again.");
+        }
+        setLoading(false);
+    };
+
+    //Update the username
+    const handleUpdateUsername = async () => {
+        try {
+            setResponseMsg('');
+            setLoading(true);
+            await updateUsername(editUsername);
+            // history.push('/user/home');
+            setResponseMsg('Username updated!')
+            setEditUsernameBool(false);
+        } catch (err) {
+            setResponseMsg("Error updating username. Please try agian.");
+        }
+        setLoading(false);
+    };
+
     // When the user wants to update their profile information
     // Reflect this updated information on the front-end and in the DB
     const handleCheckIconClick = (type) => {
         if (type === 'username') {
-            // TODO Make a DB call to save the updated Username
-            // setUser({ ...user, username: editUsername });
-            // initialValues.username = editUsername;
-            // setEditUsernameBool(false);
+            handleUpdateUsername();
+            initialValues.username = editUsername;
         } else if (type === 'password') {
-            // TODO Make a DB call to save the updated Password
-            // setUser({ ...user, password: editPassword });
-            // initialValues.password = editPassword;
-            // setEditPasswordBool(false);
+            handleUpdatePassword();
+            initialValues.password = editPassword;
         }
     };
 
@@ -96,7 +169,7 @@ const EditProfile = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <img
                         className='profile-avatar-image'
-                        src='https://thumbs.dreamstime.com/b/profile-icon-male-avatar-portrait-casual-person-silhouette-face-flat-design-vector-46846325.jpg'
+                        src={imagePreview}
                         alt='avatar'
                     />
                     <Button
@@ -126,7 +199,10 @@ const EditProfile = () => {
                                             id='standard-adornment-password'
                                             type='text'
                                             value={editUsername}
-                                            onChange={(e) => setEditUsername(e.target.value)}
+                                            onChange={(e) => {
+                                                setEditUsername(e.target.value);
+                                                setResponseMsg('');
+                                            }}
                                             endAdornment={
                                                 <InputAdornment disablePointerEvents position='end'>
                                                     <IconButton edge='end'>
@@ -170,7 +246,10 @@ const EditProfile = () => {
                                             id='standard-adornment-password'
                                             type={showPassword ? 'text' : 'password'}
                                             value={editPassword}
-                                            onChange={(e) => setEditPassword(e.target.value)}
+                                            onChange={(e) => {
+                                                setEditPassword(e.target.value);
+                                                setResponseMsg('');
+                                            }}
                                             endAdornment={
                                                 <InputAdornment position='end'>
                                                     <IconButton
@@ -193,7 +272,10 @@ const EditProfile = () => {
                                             id='standard-adornment-password'
                                             type={showPassword ? 'text' : 'password'}
                                             value={editConfirmPassword}
-                                            onChange={(e) => setEditConfirmPassword(e.target.value)}
+                                            onChange={(e) => {
+                                                setEditConfirmPassword(e.target.value);
+                                                setResponseMsg('');
+                                            }}
                                             endAdornment={
                                                 <InputAdornment position='end'>
                                                     <IconButton
@@ -211,7 +293,7 @@ const EditProfile = () => {
                                 </div>
                             </div>
                             <Tooltip title='Save'>
-                                <CheckIcon onClick={() => handleCheckIconClick('password')} className='edit-profile-icon' style={{ color: 'green', fontSize: 25 }} />
+                                <CheckIcon disabled={overallValidation ? false : true} onClick={() => handleCheckIconClick('password')} className='edit-profile-icon' style={{ color: overallValidation ? 'green' : '#DCDCDC', fontSize: 25 }} />
                             </Tooltip>
                             <Tooltip title='Cancel'>
                                 <CloseIcon onClick={() => handleCancelIconClick('password')} className='edit-profile-icon' style={{ color: 'red', fontSize: 25 }} />
@@ -229,7 +311,7 @@ const EditProfile = () => {
                             </Tooltip>
                         </div>
                     )}
-
+                    {responseMsg && <p style={{ color: 'red' }}>{responseMsg}</p>}
                     <Button
                         onClick={handleBackClick}
                         style={{

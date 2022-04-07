@@ -12,7 +12,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import { useAuth } from '../context/AuthContext';
-import { red } from '@mui/material/colors';
 
 const SignUp = () => {
     const { signup } = useAuth();
@@ -65,7 +64,7 @@ const SignUp = () => {
             await signup(values.email, values.username, values.password);
             history.push('/user/home');
         } catch (err) {
-            setError(err.message);
+            setError("The email address is already in use.");
         }
         setLoading(false);
     };
@@ -134,7 +133,7 @@ const SignUp = () => {
                         />
                     </FormControl>
 
-                    {error && <p style={{ color: red }}>{error}</p>}
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
                     <Button
                         disabled={overallValidation ? false : true}
                         type='submit'
