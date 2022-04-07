@@ -1,10 +1,23 @@
+import React, { useState } from 'react';
 import ProfilePosts from './ProfilePosts';
 import Button from '@mui/material/Button';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { storage } from '../../firebase';
 
 const Profile = () => {
     const { currentUser } = useAuth();
+
+    const [imagePreview, setImagePreview] = useState('');
+
+    storage
+        .ref(`profile/${currentUser.displayName}`)
+        .child('avatar.png')
+        .getDownloadURL()
+        .then((url) => {
+            setImagePreview(url);
+        })
+        .catch((e) => console.log('Errors while downloading => ', e));
 
     const history = useHistory();
 
@@ -111,7 +124,7 @@ const Profile = () => {
                 <div className='upper-card-container'>
                     <img
                         className='profile-avatar-image'
-                        src='https://thumbs.dreamstime.com/b/profile-icon-male-avatar-portrait-casual-person-silhouette-face-flat-design-vector-46846325.jpg'
+                        src= {imagePreview}
                         alt='avatar'
                     />
                     <div className='profile-header'>{currentUser.displayName}</div>

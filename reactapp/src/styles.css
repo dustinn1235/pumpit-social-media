@@ -308,6 +308,11 @@ body {
     margin-right: 0.5rem;
 }
 
+.description-sets-reps {
+    float: right;
+    font-family: 'Spartan-B';
+}
+
 .comment-container {
     margin-top: 1rem;
 }
@@ -363,7 +368,8 @@ body {
 
 .edit-profile-icon:hover {
     cursor: pointer;
-    background-color: gainsboro;
+    color: #f4faff;
+    background-color: var(--top-grad);
 }
 
 .profile-header {
@@ -382,6 +388,8 @@ body {
     width: 250px;
     height: 250px;
     object-fit: cover;
+    border: 1px solid var(--grey-blue);
+    border-radius: 5px;
 }
 
 .profile-avatar-image {
@@ -443,7 +451,7 @@ body {
 .workout-content-card {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: #f4faff;
     padding: 1.5rem;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 15px;
@@ -470,6 +478,7 @@ body {
     text-align: center;
     font-size: 1.25rem;
     color: white;
+    line-height: 110%;
 }
 
 .show-workouts-content {
@@ -480,6 +489,7 @@ body {
     font-size: 1.5rem;
     font-family: 'Spartan-B';
     margin-bottom: 0.5rem;
+    color: var(--button-blue);
 }
 
 .show-workouts-chosen {
@@ -495,6 +505,10 @@ body {
 }
 
 /* ========== New Post =========== */
+
+.card-container {
+    background-color: #f4faff;
+}
 
 .new-post-image-preview {
     width: 250px;

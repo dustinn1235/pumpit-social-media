@@ -5,12 +5,17 @@ import Tooltip from '@mui/material/Tooltip';
 import Help from '@mui/icons-material/HelpOutline';
 import MenuItem from '@mui/material/MenuItem';
 import { useHistory } from 'react-router-dom';
+import { storage, db } from '../../firebase';
+import { useAuth } from '../../context/AuthContext';
 
 const NewPost = () => {
     // History variable is used to update the path of the site
     const history = useHistory();
 
+    const { currentUser } = useAuth();
+
     const [imageUpload, setImageUpload] = useState('');
+    const [imagePreview, setImagePreview] = useState('');
 
     const [values, setValues] = React.useState({
         description: '',
@@ -30,26 +35,59 @@ const NewPost = () => {
     };
 
     const handleUploadedFiles = (e) => {
-        setImageUpload(URL.createObjectURL(e.target.files[0]));
+        if (e.target.files[0]) {
+            setImagePreview(URL.createObjectURL(e.target.files[0]));
+            setImageUpload(e.target.files[0]);
+        }
     };
 
     const handlePostClick = () => {
-        // TODO Make a database post with the "values" object and "imageUpload" object
+        const uploadTask = storage.ref(`images/${imageUpload.name}`).put(imageUpload);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => { },
+            (error) => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref('images')
+                    .child(imageUpload.name)
+                    .getDownloadURL()
+                    .then((url) => {
+                        console.log(url);
+                    });
+            },
+        );
+        // POST values to firestore
+        db
+            .collection('posts')
+            .doc()
+            .set({
+                username: currentUser.displayName,
+                description: values.description,
+                reps: values.reps,
+                sets: values.sets,
+                workoutType: values.workoutType,
+                imgName: imageUpload.name,
+                time: Date()
+            });
+
         history.push('/user/home');
     };
 
     return (
         <div className='workout-container'>
             <div className='card-container'>
-                <div style={{ marginBottom: '0.5rem' }} className='workout-header'>
+                <div style={{ marginBottom: '0.5rem', color: 'var(--button-blue)' }} className='workout-header'>
                     New Post
                 </div>
                 <div className='workout-helper-text'>Fill in the following fields to generate a post</div>
 
                 <div className='post-content-container'>
-                    {imageUpload !== '' ? (
+                    {imagePreview !== '' ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <img className='new-post-image-preview' src={imageUpload} alt='imageUpload' />
+                            <img className='new-post-image-preview' src={imagePreview} alt='imageUpload' />
                             <Button
                                 onClick={handleChangeImage}
                                 style={{
@@ -137,7 +175,7 @@ const NewPost = () => {
                                     </TextField>
                                 </div>
                                 <Tooltip title='A rep is the number of times you perform a specific exercise'>
-                                    <Help style={{ color: 'gray' }} />
+                                    <Help style={{ color: 'var(--button-blue)' }} />
                                 </Tooltip>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -156,7 +194,7 @@ const NewPost = () => {
                                     </TextField>
                                 </div>
                                 <Tooltip title='A set is the number of cycles of reps that you complete'>
-                                    <Help style={{ color: 'gray' }} />
+                                    <Help style={{ color: 'var(--button-blue)' }} />
                                 </Tooltip>
                             </div>
                         </div>

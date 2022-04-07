@@ -63,6 +63,7 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                     <div className='description-container'>
                         <span className='description-username'>{username}</span>
                         <span>{description}</span>
+                        <span className='description-sets-reps'>3 sets of 10</span>
                     </div>
                     {allComments === [] ? null : (
                         <>

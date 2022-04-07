@@ -15,13 +15,23 @@ import IconButton from '@mui/material/IconButton';
 import Box from '@mui/icons-material/CheckBoxOutlineBlank';
 import Typography from '@mui/material/Typography';
 import { useAuth } from '../../context/AuthContext';
-import { red } from '@mui/material/colors';
+import { storage } from '../../firebase';
 
 const EditProfile = () => {
     const { currentUser, updatePassword, updateUsername } = useAuth();
     const history = useHistory();
 
     const [imageUpload, setImageUpload] = useState('');
+    const [imagePreview, setImagePreview] = useState('');
+
+    storage
+        .ref(`profile/${currentUser.displayName}`)
+        .child('avatar.png')
+        .getDownloadURL()
+        .then((url) => {
+            setImagePreview(url);
+        })
+        .catch((e) => console.log('Errors while downloading => ', e));
 
     const [editUsername, setEditUsername] = useState(currentUser.displayName);
     const [editUsernameBool, setEditUsernameBool] = useState(false);
@@ -41,9 +51,32 @@ const EditProfile = () => {
     };
 
     const handleUploadedFiles = (e) => {
-        // TODO Figure out how to upload the image file to the database (imageUpload)
-        setImageUpload(URL.createObjectURL(e.target.files[0]));
+        if (e.target.files[0]) {
+            setImagePreview(URL.createObjectURL(e.target.files[0]));
+            setImageUpload(e.target.files[0]);
+        }
     };
+
+    const handleProfilePictureUpload = () => {
+        // TODO Add button to confirm upload
+        const uploadTask = storage.ref(`profile/${currentUser.displayName}/${imageUpload.name}`).put(imageUpload);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => { },
+            (error) => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref(`profile/${currentUser.displayName}`)
+                    .child('avatar.png')
+                    .getDownloadURL()
+                    .then((url) => {
+                        console.log(url);
+                    });
+            },
+        );
+    }
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -136,7 +169,7 @@ const EditProfile = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <img
                         className='profile-avatar-image'
-                        src='https://thumbs.dreamstime.com/b/profile-icon-male-avatar-portrait-casual-person-silhouette-face-flat-design-vector-46846325.jpg'
+                        src={imagePreview}
                         alt='avatar'
                     />
                     <Button
@@ -278,7 +311,7 @@ const EditProfile = () => {
                             </Tooltip>
                         </div>
                     )}
-                    {responseMsg && <p style={{ color: red }}>{responseMsg}</p>}
+                    {responseMsg && <p style={{ color: 'red' }}>{responseMsg}</p>}
                     <Button
                         onClick={handleBackClick}
                         style={{
