@@ -47,7 +47,7 @@ const EditProfile = () => {
 
     const handleProfilePictureUpload = () => {
         // TODO Add button to confirm upload
-        const uploadTask = storage.ref(`profile/${imageUpload.name}`).put(imageUpload);
+        const uploadTask = storage.ref(`profile/${currentUser.displayName}/${imageUpload.name}`).put(imageUpload);
         uploadTask.on(
             'state_changed',
             (snapshot) => {},
@@ -56,7 +56,7 @@ const EditProfile = () => {
             },
             () => {
                 storage
-                    .ref('profile')
+                    .ref(`profile/${currentUser.displayName}`)
                     .child(imageUpload.name)
                     .getDownloadURL()
                     .then((url) => {
