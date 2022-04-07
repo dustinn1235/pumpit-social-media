@@ -24,6 +24,15 @@ const EditProfile = () => {
     const [imageUpload, setImageUpload] = useState('');
     const [imagePreview, setImagePreview] = useState('');
 
+    storage
+        .ref(`profile/${currentUser.displayName}`)
+        .child('avatar.png')
+        .getDownloadURL()
+        .then((url) => {
+            setImagePreview(url);
+        })
+        .catch((e) => console.log('Errors while downloading => ', e));
+
     const [editUsername, setEditUsername] = useState(currentUser.displayName);
     const [editUsernameBool, setEditUsernameBool] = useState(false);
 
@@ -50,14 +59,14 @@ const EditProfile = () => {
         const uploadTask = storage.ref(`profile/${currentUser.displayName}/${imageUpload.name}`).put(imageUpload);
         uploadTask.on(
             'state_changed',
-            (snapshot) => {},
+            (snapshot) => { },
             (error) => {
                 console.log(error);
             },
             () => {
                 storage
                     .ref(`profile/${currentUser.displayName}`)
-                    .child(imageUpload.name)
+                    .child('avatar.png')
                     .getDownloadURL()
                     .then((url) => {
                         console.log(url);
