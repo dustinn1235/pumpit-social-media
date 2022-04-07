@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
@@ -13,25 +13,34 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/icons-material/CheckBoxOutlineBlank';
-import Typography from '@mui/material/Typography';
 import { useAuth } from '../../context/AuthContext';
 import { storage } from '../../firebase';
+import PulseLoader from 'react-spinners/PulseLoader';
 
 const EditProfile = () => {
     const { currentUser, updatePassword, updateUsername } = useAuth();
     const history = useHistory();
 
     const [imageUpload, setImageUpload] = useState('');
+    const [imageToPost, setImageToPost] = useState('');
     const [imagePreview, setImagePreview] = useState('');
 
-    storage
-        .ref(`profile/${currentUser.displayName}`)
-        .child('avatar.png')
-        .getDownloadURL()
-        .then((url) => {
-            setImagePreview(url);
-        })
-        .catch((e) => console.log('Errors while downloading => ', e));
+    const [changingImage, setChangingImage] = useState(false);
+
+    useEffect(() => {
+        storage
+            .ref(`profile/${currentUser.displayName}`)
+            .child('avatar.png')
+            .getDownloadURL()
+            .then((url) => {
+                setImagePreview(url);
+            })
+            .catch((e) => {
+                console.log('useEffect error => ', e);
+                setImagePreview('https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg');
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const [editUsername, setEditUsername] = useState(currentUser.displayName);
     const [editUsernameBool, setEditUsernameBool] = useState(false);
@@ -51,32 +60,19 @@ const EditProfile = () => {
     };
 
     const handleUploadedFiles = (e) => {
+        setChangingImage(true);
         if (e.target.files[0]) {
-            setImagePreview(URL.createObjectURL(e.target.files[0]));
-            setImageUpload(e.target.files[0]);
+            setImageUpload(URL.createObjectURL(e.target.files[0]));
+            setImageToPost(e.target.files[0]);
+        } else {
+            setChangingImage(false);
         }
     };
 
     const handleProfilePictureUpload = () => {
         // TODO Add button to confirm upload
-        const uploadTask = storage.ref(`profile/${currentUser.displayName}/${imageUpload.name}`).put(imageUpload);
-        uploadTask.on(
-            'state_changed',
-            (snapshot) => { },
-            (error) => {
-                console.log(error);
-            },
-            () => {
-                storage
-                    .ref(`profile/${currentUser.displayName}`)
-                    .child('avatar.png')
-                    .getDownloadURL()
-                    .then((url) => {
-                        console.log(url);
-                    });
-            },
-        );
-    }
+        storage.ref(`profile/${currentUser.displayName}/avatar.png`).put(imageToPost);
+    };
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -112,10 +108,10 @@ const EditProfile = () => {
             setLoading(true);
             await updatePassword(editPassword);
             // history.push('/user/home');
-            setResponseMsg('Password Updated!')
+            setResponseMsg('Password Updated!');
             setEditPasswordBool(false);
         } catch (err) {
-            setResponseMsg("Error updating password, please try again.");
+            setResponseMsg('Error updating password, please try again.');
         }
         setLoading(false);
     };
@@ -127,10 +123,10 @@ const EditProfile = () => {
             setLoading(true);
             await updateUsername(editUsername);
             // history.push('/user/home');
-            setResponseMsg('Username updated!')
+            setResponseMsg('Username updated!');
             setEditUsernameBool(false);
         } catch (err) {
-            setResponseMsg("Error updating username. Please try agian.");
+            setResponseMsg('Error updating username. Please try agian.');
         }
         setLoading(false);
     };
@@ -144,6 +140,10 @@ const EditProfile = () => {
         } else if (type === 'password') {
             handleUpdatePassword();
             initialValues.password = editPassword;
+        } else if (type === 'pic') {
+            setImagePreview(imageUpload);
+            handleProfilePictureUpload();
+            setChangingImage(false);
         }
     };
 
@@ -156,6 +156,8 @@ const EditProfile = () => {
         } else if (type === 'password') {
             setEditPassword(initialValues.password);
             setEditPasswordBool(false);
+        } else if (type === 'pic') {
+            setChangingImage(false);
         }
     };
 
@@ -167,27 +169,47 @@ const EditProfile = () => {
             <div className='card-container'>
                 <div className='edit-profile-header'>Edit Profile</div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <img
-                        className='profile-avatar-image'
-                        src={imagePreview}
-                        alt='avatar'
-                    />
-                    <Button
-                        variant='contained'
-                        component='label'
-                        style={{
-                            textTransform: 'none',
-                            borderRadius: '500px',
-                            padding: '0.5rem 1rem',
-                            backgroundColor: '#f4faff',
-                            color: 'var(--button-blue)',
-                            fontFamily: 'Spartan-R',
-                            fontSize: '1rem',
-                            boxShadow: 'none',
-                        }}>
-                        <span className='edit-profile-profile-pic-header'>Change profile picture</span>
-                        <input type='file' name='files' accept='image/png, image/gif, image/jpeg' hidden onChange={handleUploadedFiles} />
-                    </Button>
+                    {changingImage ? (
+                        <img className='profile-avatar-image' src={imageUpload} alt='avatar' />
+                    ) : (
+                        <>
+                            {imagePreview ? (
+                                <img className='profile-avatar-image' src={imagePreview} alt='avatar' />
+                            ) : (
+                                <div className='profile-avatar-loading'>
+                                    <PulseLoader size={20} margin={7} color={'var(--button-blue)'} loading={true} />
+                                </div>
+                            )}
+                        </>
+                    )}
+
+                    {changingImage ? (
+                        <div style={{ display: 'flex', marginTop: '0.5rem' }}>
+                            <Tooltip title='Save'>
+                                <CheckIcon onClick={() => handleCheckIconClick('pic')} className='edit-profile-icon' style={{ color: 'green', fontSize: 25 }} />
+                            </Tooltip>
+                            <Tooltip title='Cancel'>
+                                <CloseIcon onClick={() => handleCancelIconClick('pic')} className='edit-profile-icon' style={{ color: 'red', fontSize: 25 }} />
+                            </Tooltip>
+                        </div>
+                    ) : (
+                        <Button
+                            variant='contained'
+                            component='label'
+                            style={{
+                                textTransform: 'none',
+                                borderRadius: '500px',
+                                padding: '0.5rem 1rem',
+                                backgroundColor: '#f4faff',
+                                color: 'var(--button-blue)',
+                                fontFamily: 'Spartan-R',
+                                fontSize: '1rem',
+                                boxShadow: 'none',
+                            }}>
+                            <span className='edit-profile-profile-pic-header'>Change profile picture</span>
+                            <input type='file' name='files' accept='image/png, image/gif, image/jpeg' hidden onChange={handleUploadedFiles} />
+                        </Button>
+                    )}
 
                     {editUsernameBool ? (
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2rem', width: '100%' }}>
@@ -293,7 +315,12 @@ const EditProfile = () => {
                                 </div>
                             </div>
                             <Tooltip title='Save'>
-                                <CheckIcon disabled={overallValidation ? false : true} onClick={() => handleCheckIconClick('password')} className='edit-profile-icon' style={{ color: overallValidation ? 'green' : '#DCDCDC', fontSize: 25 }} />
+                                <CheckIcon
+                                    disabled={overallValidation ? false : true}
+                                    onClick={() => handleCheckIconClick('password')}
+                                    className='edit-profile-icon'
+                                    style={{ color: overallValidation ? 'green' : '#DCDCDC', fontSize: 25 }}
+                                />
                             </Tooltip>
                             <Tooltip title='Cancel'>
                                 <CloseIcon onClick={() => handleCancelIconClick('password')} className='edit-profile-icon' style={{ color: 'red', fontSize: 25 }} />

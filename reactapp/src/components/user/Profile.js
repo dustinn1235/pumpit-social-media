@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { storage } from '../../firebase';
+import PulseLoader from 'react-spinners/PulseLoader';
 
 const Profile = () => {
     const { currentUser } = useAuth();
@@ -15,9 +16,14 @@ const Profile = () => {
         .child('avatar.png')
         .getDownloadURL()
         .then((url) => {
+            console.log(url);
             setImagePreview(url);
         })
-        .catch((e) => console.log('Errors while downloading => ', e));
+        .catch((e) => {
+            console.log('Errors while downloading => ', e);
+            // Default image used for profile picture
+            setImagePreview('https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg');
+        });
 
     const history = useHistory();
 
@@ -122,11 +128,14 @@ const Profile = () => {
         <div className='profile-container'>
             <div className='card-container'>
                 <div className='upper-card-container'>
-                    <img
-                        className='profile-avatar-image'
-                        src= {imagePreview}
-                        alt='avatar'
-                    />
+                    {imagePreview ? (
+                        <img className='profile-avatar-image' src={imagePreview} alt='avatar' />
+                    ) : (
+                        <div className='profile-avatar-loading'>
+                            <PulseLoader size={20} margin={7} color={'var(--button-blue)'} loading={true} />
+                        </div>
+                    )}
+
                     <div className='profile-header'>{currentUser.displayName}</div>
                     <div className='profile-edit-button'>
                         <Button

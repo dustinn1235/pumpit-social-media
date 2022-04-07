@@ -290,6 +290,14 @@ body {
     margin-right: 5px;
 }
 
+.post-header-image {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
 .footer-no-comment-input {
     padding: 1rem;
 }
@@ -368,8 +376,7 @@ body {
 
 .edit-profile-icon:hover {
     cursor: pointer;
-    color: #f4faff;
-    background-color: var(--top-grad);
+    background-color: #e8e8e8;
 }
 
 .profile-header {
@@ -397,6 +404,13 @@ body {
     height: 125px;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.profile-avatar-loading {
+    display: flex;
+    align-items: center;
+    width: 125px;
+    height: 125px;
 }
 
 .upper-card-container {
@@ -623,6 +637,10 @@ body {
         position: relative;
     }
     .profile-avatar-image {
+        width: 100px;
+        height: 100px;
+    }
+    .profile-avatar-loading {
         width: 100px;
         height: 100px;
     }

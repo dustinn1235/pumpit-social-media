@@ -5,6 +5,8 @@ import Comment from '@mui/icons-material/ModeCommentOutlined';
 import Comments from './Comments';
 import Button from '@mui/material/Button';
 import { useAuth } from '../../context/AuthContext';
+import { storage } from '../../firebase';
+import PulseLoader from 'react-spinners/PulseLoader';
 
 const Posts = ({ id, username, image, date, description, comments }) => {
     const { currentUser } = useAuth();
@@ -14,6 +16,20 @@ const Posts = ({ id, username, image, date, description, comments }) => {
     const [myComments, setMyComments] = useState([]);
     const [showMyComments, setShowMyComments] = useState(false);
     const [allComments, setAllComments] = useState(comments);
+
+    const [imagePreview, setImagePreview] = useState('');
+
+    storage
+        .ref(`profile/username`)
+        .child('avatar.png')
+        .getDownloadURL()
+        .then((url) => {
+            setImagePreview(url);
+        })
+        .catch((e) => {
+            console.log('Errors while downloading => ', e);
+            setImagePreview('https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg');
+        });
 
     const handleLikeClick = () => {
         // TODO Make a call to the DB to update the like boolean
@@ -48,7 +64,17 @@ const Posts = ({ id, username, image, date, description, comments }) => {
     return (
         <div className='post-container'>
             <div className='post-header'>
-                <div className='post-header-username'>{username}</div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    {imagePreview ? (
+                        <img className='post-header-image' src={imagePreview} alt='avatar' />
+                    ) : (
+                        <div style={{ display: 'flex', alignItems: 'center', height: '35px' }}>
+                            <PulseLoader size={8} margin={2} color={'var(--button-blue)'} loading={true} />
+                        </div>
+                    )}
+
+                    <div className='post-header-username'>{username}</div>
+                </div>
                 <div className='post-header-date'>{date}</div>
             </div>
 
