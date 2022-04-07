@@ -10,16 +10,14 @@ import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
-import { red } from '@mui/material/colors';
 
 import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
-    const { signin, currentUser } = useAuth();
+    const { signin } = useAuth();
     const history = useHistory();
 
     const [showError, setShowError] = useState(false);
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const [values, setValues] = React.useState({
@@ -30,6 +28,7 @@ const SignIn = () => {
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
+        setShowError(false);
     };
 
     const handleClickShowPassword = () => {
@@ -49,12 +48,12 @@ const SignIn = () => {
         e.preventDefault();
 
         try {
-            setError('');
+            setShowError(false);
             setLoading(true);
             await signin(values.email, values.password);
             history.push('/user/home');
         } catch (err) {
-            setError(err.message);
+            setShowError(true);
         }
         setLoading(false);
     };
@@ -77,12 +76,11 @@ const SignIn = () => {
                 {showError ? (
                     <div style={{ margin: '1rem 0 0 0' }} className='card-header-icon-container'>
                         <div style={{ color: 'red' }} className='card-sub-header'>
-                            Incorrect Password
+                            Incorrect Email/Password combination
                         </div>
                     </div>
                 ) : null}
 
-                {/* New Version */}
                 <form className='sign-up-form' onSubmit={handleSignInClick}>
                     <TextField style={{ marginTop: '2rem' }} value={values.email} onChange={handleChange('email')} id='outlined-basic' label='Email' variant='outlined' />
 
@@ -103,10 +101,8 @@ const SignIn = () => {
                             label='Password'
                         />
                     </FormControl>
-
-                    {error && <p style={{ color: red }}>{error}</p>}
                     <Button
-                        disabled={validForm ? false : true}
+                        disabled={validForm && !loading ? false : true}
                         type='submit'
                         style={{
                             textTransform: 'none',
@@ -131,7 +127,6 @@ const SignIn = () => {
                     <div onClick={handleGoToSignUpClick} className='helper-link' style={{ color: 'var(--top-grad)' }}>
                         Sign Up
                     </div>
-                    {/* <Link to="/signup">Sign Up</Link> */}
                 </div>
             </div>
         </div>
