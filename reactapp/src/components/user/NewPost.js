@@ -5,11 +5,14 @@ import Tooltip from '@mui/material/Tooltip';
 import Help from '@mui/icons-material/HelpOutline';
 import MenuItem from '@mui/material/MenuItem';
 import { useHistory } from 'react-router-dom';
-import { storage } from '../../firebase';
+import { storage, db } from '../../firebase';
+import { useAuth } from '../../context/AuthContext';
 
 const NewPost = () => {
     // History variable is used to update the path of the site
     const history = useHistory();
+
+    const { currentUser } = useAuth();
 
     const [imageUpload, setImageUpload] = useState('');
     const [imagePreview, setImagePreview] = useState('');
@@ -39,11 +42,10 @@ const NewPost = () => {
     };
 
     const handlePostClick = () => {
-        // TODO Make a database post with the "values" object and "imageUpload" object
         const uploadTask = storage.ref(`images/${imageUpload.name}`).put(imageUpload);
         uploadTask.on(
             'state_changed',
-            (snapshot) => {},
+            (snapshot) => { },
             (error) => {
                 console.log(error);
             },
@@ -57,6 +59,20 @@ const NewPost = () => {
                     });
             },
         );
+        // POST values to firestore
+        db
+            .collection('posts')
+            .doc()
+            .set({
+                username: currentUser.displayName,
+                description: values.description,
+                reps: values.reps,
+                sets: values.sets,
+                workoutType: values.workoutType,
+                imgName: imageUpload.name,
+                time: Date()
+            });
+
         history.push('/user/home');
     };
 
