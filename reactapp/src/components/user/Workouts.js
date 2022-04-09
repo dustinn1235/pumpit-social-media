@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import { db } from '../../firebase';
 
 const Workouts = () => {
     // TODO Need to get images/videos to support each different workout
     // TODO Need to get descriptions for each workout.
+    // const [muscleCols, setMuscleCols] = useState({});
 
     // Different types of muscles
     const muscleGroups = ['Chest', 'Back', 'Biceps', 'Triceps', 'Shoulders', 'Quads', 'Hamstrings', 'Calfs', 'Glutes'];
@@ -67,7 +69,6 @@ const Workouts = () => {
         'Romanian Deadlift',
         'Single-Leg Deadlift',
         'Hex-Bar Deadlift',
-        'Glute Bridge',
         'Barbell Hip Thrust',
         'Swiss Ball Leg Curl',
         'Kettlebell Swing',
@@ -97,9 +98,6 @@ const Workouts = () => {
         'Walking Lunge',
         'Cable Glute Kickback',
         'Step Downs',
-        'Smith Machine Reverse Lunge',
-        'Lateral Lunge',
-        'Goblet Squat',
     ];
 
     // Boolean to Show the UI for the generated workouts
@@ -115,6 +113,29 @@ const Workouts = () => {
     const [hamstringsBool, setHamstringsBool] = useState(false);
     const [calfsBool, setCalfsBool] = useState(false);
     const [glutesBool, setGlutesBool] = useState(false);
+
+    // State variable for exercises
+    const [chestEx, setChestEx] = useState({});
+    const [backEx, setBackEx] = useState({});
+    const [bicepEx, setBicepEx] = useState({});
+    const [tricepEx, setTricepEx] = useState({});
+    const [shoulderEx, setShoulderEx] = useState({});
+    const [quadEx, setQuadEx] = useState({});
+    const [hamstringEx, setHamstringEx] = useState({});
+    const [calfEx, setCalfEx] = useState({});
+    const [gluteEx, setGluteEx] = useState({});
+
+    let musclesCollection = {};
+    const getData = async () => {
+        await db
+            .collection('muscles')
+            .get()
+            .then((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+                    musclesCollection[doc.id] = doc.data();
+                });
+            });
+    };
 
     // Toggle the muscle button that was clicked
     const handleMuscleClick = (muscleType) => {
@@ -166,42 +187,75 @@ const Workouts = () => {
     let validSelection = chestBool || backBool || bicepsBool || tricepsBool || shouldersBool || quadsBool || hamstringsBool || calfsBool || glutesBool;
 
     // Show the generated workouts UI
-    const generateWorkouts = () => {
+    const generateWorkouts = async () => {
         setShowWorkouts(true);
+        await getData();
+
+        let index;
+        if (chestBool) {
+            index = getWorkout('Chest');
+            setChestEx(musclesCollection['chest']['workouts'][index]);
+            console.log(musclesCollection['chest']['workouts'][index].vidURL);
+        }
+        if (backBool) {
+            index = getWorkout('Back');
+            setBackEx(musclesCollection['back']['workouts'][index]);
+        }
+        if (bicepsBool) {
+            index = getWorkout('Biceps');
+            setBicepEx(musclesCollection['bicep']['workouts'][index]);
+        }
+        if (tricepsBool) {
+            index = getWorkout('Triceps');
+            setTricepEx(musclesCollection['tricep']['workouts'][index]);
+        }
+        if (shouldersBool) {
+            index = getWorkout('Shoulders');
+            setShoulderEx(musclesCollection['shoulder']['workouts'][index]);
+        }
+        if (quadsBool) {
+            index = getWorkout('Quads');
+            setQuadEx(musclesCollection['quad']['workouts'][index]);
+        }
+        if (hamstringsBool) {
+            index = getWorkout('Hamstrings');
+            setHamstringEx(musclesCollection['hamstring']['workouts'][index]);
+        }
+        if (calfsBool) {
+            index = getWorkout('Calfs');
+            setCalfEx(musclesCollection['calf']['workouts'][index]);
+        }
+        if (glutesBool) {
+            index = getWorkout('Glutes');
+            setGluteEx(musclesCollection['glute']['workouts'][index]);
+        }
     };
 
     // When showing the workouts UI, pick a workout at random
     const getWorkout = (muscleType) => {
-        if (muscleType === 'Chest') {
-            let index = Math.floor(Math.random() * chestWorkouts.length);
-            return chestWorkouts[index];
-        } else if (muscleType === 'Back') {
-            let index = Math.floor(Math.random() * backWorkouts.length);
-            return backWorkouts[index];
-        } else if (muscleType === 'Biceps') {
-            let index = Math.floor(Math.random() * bicepWorkouts.length);
-            return bicepWorkouts[index];
-        } else if (muscleType === 'Triceps') {
-            let index = Math.floor(Math.random() * tricepWorkouts.length);
-            return tricepWorkouts[index];
-        } else if (muscleType === 'Shoulders') {
-            let index = Math.floor(Math.random() * shoulderWorkouts.length);
-            return shoulderWorkouts[index];
-        } else if (muscleType === 'Quads') {
-            let index = Math.floor(Math.random() * quadWorkouts.length);
-            return quadWorkouts[index];
-        } else if (muscleType === 'Hamstrings') {
-            let index = Math.floor(Math.random() * hamstringWorkouts.length);
-            return hamstringWorkouts[index];
-        } else if (muscleType === 'Calfs') {
-            let index = Math.floor(Math.random() * calfWorkouts.length);
-            return calfWorkouts[index];
-        } else if (muscleType === 'Glutes') {
-            let index = Math.floor(Math.random() * gluteWorkouts.length);
-            return gluteWorkouts[index];
-        }
-    };
+        let index = 0;
 
+        if (muscleType === 'Chest') {
+            index = Math.floor(Math.random() * chestWorkouts.length);
+        } else if (muscleType === 'Back') {
+            index = Math.floor(Math.random() * backWorkouts.length);
+        } else if (muscleType === 'Biceps') {
+            index = Math.floor(Math.random() * bicepWorkouts.length);
+        } else if (muscleType === 'Triceps') {
+            index = Math.floor(Math.random() * tricepWorkouts.length);
+        } else if (muscleType === 'Shoulders') {
+            index = Math.floor(Math.random() * shoulderWorkouts.length);
+        } else if (muscleType === 'Quads') {
+            index = Math.floor(Math.random() * quadWorkouts.length);
+        } else if (muscleType === 'Hamstrings') {
+            index = Math.floor(Math.random() * hamstringWorkouts.length);
+        } else if (muscleType === 'Calfs') {
+            index = Math.floor(Math.random() * calfWorkouts.length);
+        } else if (muscleType === 'Glutes') {
+            index = Math.floor(Math.random() * gluteWorkouts.length);
+        }
+        return index;
+    };
     return (
         <div className='workout-container'>
             {showWorkouts ? (
@@ -215,81 +269,83 @@ const Workouts = () => {
                     <div className='workouts-grid'>
                         {chestBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Chest</div>
-                                    <div className='show-workouts-chosen'>{getWorkout('Chest')}</div>
-                                </div>
+                                <div className='show-workouts-subheader'>Chest</div>
+                                <div className='show-workouts-chosen'>{chestEx.name}</div>
+                                <div className='show-workouts-descr'>{chestEx.descr}</div>
+                                <iframe title='Chest Tut' src={chestEx.vidURL} />
                             </div>
                         ) : null}
                         {backBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Back</div>
-                                    <div className='show-workouts-chosen'>{getWorkout('Back')}</div>
-                                </div>
+                                <div className='show-workouts-subheader'>Back</div>
+                                <div className='show-workouts-chosen'>{backEx.name}</div>
+                                <div className='show-workouts-descr'>{backEx.descr}</div>
+                                <iframe title='Back Tut' src={backEx.vidURL} />
                             </div>
                         ) : null}
                         {bicepsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Biceps</div>
-                                    <div className='show-workouts-chosen'>{getWorkout('Biceps')}</div>
-                                </div>
+                                <div className='show-workouts-subheader'>Biceps</div>
+                                <div className='show-workouts-chosen'>{bicepEx.name}</div>
+                                <div className='show-workouts-descr'>{bicepEx.descr}</div>
+                                <iframe title='Bicep Tut' src={bicepEx.vidURL} />
                             </div>
                         ) : null}
                         {tricepsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Triceps</div>
-                                    <div className='show-workouts-chosen'>{getWorkout('Triceps')}</div>
-                                </div>
+                                <div className='show-workouts-subheader'>Triceps</div>
+                                <div className='show-workouts-chosen'>{tricepEx.name}</div>
+                                <div className='show-workouts-descr'>{tricepEx.descr}</div>
+                                <iframe title='Tricep Tut' src={tricepEx.vidURL} />
                             </div>
                         ) : null}
                         {shouldersBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Shoulders</div>
-                                    <div className='show-workouts-chosen'>{getWorkout('Shoulders')}</div>
-                                </div>
+                                <div className='show-workouts-subheader'>Shoulders</div>
+                                <div className='show-workouts-chosen'>{shoulderEx.name}</div>
+                                <div className='show-workouts-descr'>{shoulderEx.descr}</div>
+                                <iframe title='Shoulder Tut' src={shoulderEx.vidURL} />
                             </div>
                         ) : null}
                         {quadsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Quads</div>
-                                    <div className='show-workouts-chosen'>{getWorkout('Quads')}</div>
-                                </div>
+                                <div className='show-workouts-subheader'>Quads</div>
+                                <div className='show-workouts-chosen'>{quadEx.name}</div>
+                                <div className='show-workouts-descr'>{quadEx.descr}</div>
+                                <iframe title='Quad Tut' src={quadEx.vidURL} />
                             </div>
                         ) : null}
                         {hamstringsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Hamstrings</div>
-                                    <div className='show-workouts-chosen'>{getWorkout('Hamstrings')}</div>
-                                </div>
+                                <div className='show-workouts-subheader'>Hamstrings</div>
+                                <div className='show-workouts-chosen'>{hamstringEx.name}</div>
+                                <div className='show-workouts-descr'>{hamstringEx.descr}</div>
+                                <iframe title='Hamstring Tut' src={hamstringEx.vidURL} />
                             </div>
                         ) : null}
                         {calfsBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Calfs</div>
-                                    <div className='show-workouts-chosen'>{getWorkout('Calfs')}</div>
-                                </div>
+                                <div className='show-workouts-subheader'>Calfs</div>
+                                <div className='show-workouts-chosen'>{calfEx.name}</div>
+                                <div className='show-workouts-descr'>{calfEx.descr}</div>
+                                <iframe title='Calf Tut' src={calfEx.vidURL} />
                             </div>
                         ) : null}
                         {glutesBool ? (
                             <div className='workout-content-card'>
-                                <div className='show-workouts-content'>
-                                    <div className='show-workouts-subheader'>Glutes</div>
-                                    <div className='show-workouts-chosen'>{getWorkout('Glutes')}</div>
-                                </div>
+                                <div className='show-workouts-subheader'>Glutes</div>
+                                <div className='show-workouts-chosen'>{gluteEx.name}</div>
+                                <div className='show-workouts-descr'>{gluteEx.descr}</div>
+                                <iframe title='Glute Tut' src={gluteEx.vidURL} />
                             </div>
                         ) : null}
                     </div>
                 </div>
             ) : (
                 <div className='card-container'>
-                    <div className='workout-header' style={{ color: 'var(--button-blue)' }}>Workouts</div>
+                    <div className='workout-header' style={{ color: 'var(--button-blue)' }}>
+                        Workouts
+                    </div>
                     <div className='workout-helper-text'>Select the muscle groups you want to work out</div>
                     <div className='check-box-container'>
                         {muscleGroups.map((muscle) => {

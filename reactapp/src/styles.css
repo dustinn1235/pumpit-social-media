@@ -15,7 +15,7 @@ body {
 :root {
     --button-blue: #193359;
     --top-grad: rgb(124, 166, 230);
-    --bottom-grad: #bfd4f3;
+    --bottom-grad: #d4e2f7;
     --grey-blue: #51698c;
 }
 
@@ -290,6 +290,14 @@ body {
     margin-right: 5px;
 }
 
+.post-header-image {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
 .footer-no-comment-input {
     padding: 1rem;
 }
@@ -368,8 +376,7 @@ body {
 
 .edit-profile-icon:hover {
     cursor: pointer;
-    color: #f4faff;
-    background-color: var(--top-grad);
+    background-color: #e8e8e8;
 }
 
 .profile-header {
@@ -388,7 +395,6 @@ body {
     width: 250px;
     height: 250px;
     object-fit: cover;
-    border: 1px solid var(--grey-blue);
     border-radius: 5px;
 }
 
@@ -397,6 +403,13 @@ body {
     height: 125px;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.profile-avatar-loading {
+    display: flex;
+    align-items: center;
+    width: 125px;
+    height: 125px;
 }
 
 .upper-card-container {
@@ -481,10 +494,6 @@ body {
     line-height: 110%;
 }
 
-.show-workouts-content {
-    margin-bottom: 2rem;
-}
-
 .show-workouts-subheader {
     font-size: 1.5rem;
     font-family: 'Spartan-B';
@@ -495,6 +504,11 @@ body {
 .show-workouts-chosen {
     font-size: 1.25rem;
     font-family: 'Spartan-R';
+    margin-bottom: 0.5rem;
+}
+
+.show-workouts-descr {
+    margin-bottom: 0.5rem;
 }
 
 .workouts-grid {
@@ -622,6 +636,10 @@ body {
         position: relative;
     }
     .profile-avatar-image {
+        width: 100px;
+        height: 100px;
+    }
+    .profile-avatar-loading {
         width: 100px;
         height: 100px;
     }
