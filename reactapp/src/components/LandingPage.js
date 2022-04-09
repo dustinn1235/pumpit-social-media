@@ -37,8 +37,6 @@ const LandingPage = () => {
     }
 
     useEffect(() => {
-        // getUsers();
-        getUsers2();
         if (currentUser !== null) {
             history.push('/user/home');
         }

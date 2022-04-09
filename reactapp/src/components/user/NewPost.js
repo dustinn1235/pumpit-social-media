@@ -70,6 +70,8 @@ const NewPost = () => {
                 sets: values.sets,
                 workoutType: values.workoutType,
                 imgName: imageUpload.name,
+                postComments: [],
+                postLikes: [],
                 time: Date()
             });
 
