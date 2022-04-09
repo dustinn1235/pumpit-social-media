@@ -7,20 +7,20 @@ import Button from '@mui/material/Button';
 import { useAuth } from '../../context/AuthContext';
 import { storage } from '../../firebase';
 import PulseLoader from 'react-spinners/PulseLoader';
+import firebase from '../../firebase';
 
-const Posts = ({ id, username, image, date, description, comments }) => {
+const Posts = ({ id, username, image, date, description, comments, likes }) => {
     const { currentUser } = useAuth();
-    const [like, setLike] = useState(false);
-    const [viewComments, setViewComments] = useState(false);
+    const [like, setLike] = useState(likes.includes(currentUser.uid));
     const [commentValue, setCommentValue] = useState('');
-    const [myComments, setMyComments] = useState([]);
     const [showMyComments, setShowMyComments] = useState(false);
     const [allComments, setAllComments] = useState(comments);
 
     const [imagePreview, setImagePreview] = useState('');
+    const [postImagePreview, setPostImagePreview] = useState('');
 
     storage
-        .ref(`profile/username`)
+        .ref(`profile/${username}`)
         .child('avatar.png')
         .getDownloadURL()
         .then((url) => {
@@ -31,11 +31,26 @@ const Posts = ({ id, username, image, date, description, comments }) => {
             setImagePreview('https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg');
         });
 
+     storage
+        .ref(`images/`)
+        .child(`${image}`)
+        .getDownloadURL()
+        .then((url) => {
+            setPostImagePreview(url);
+        })
+        .catch((e) => {
+            console.log('Errors while downloading => ', e);
+            setPostImagePreview('https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg');
+        });
+
     const handleLikeClick = () => {
         // TODO Make a call to the DB to update the like boolean
         if (like === false) {
+            firebase.firestore().collection('posts').doc(id).update({postLikes:[...likes,currentUser.uid]});
             setLike(true);
         } else {
+            const newLikesList = likes.filter(item => item !== currentUser.uid);
+            firebase.firestore().collection('posts').doc(id).update({postLikes:[...newLikesList]});
             setLike(false);
         }
     };
@@ -47,15 +62,15 @@ const Posts = ({ id, username, image, date, description, comments }) => {
     };
 
     // Function for posting a comment
-    const handlePostClick = () => {
-        // TODO send post information to DB (username, comment)
+    const handlePostClick = async () => {
+        firebase.firestore().collection('posts').doc(id).update({postComments:[...comments,{ username: currentUser && currentUser.displayName, text: commentValue }]});
+
 
         // Displays comments that the current user has just made right away
-        setMyComments([...myComments, { username: currentUser && currentUser.displayName, comment: commentValue }]);
         setShowMyComments(true);
 
         // Make a call to the DB to get all the comments on that post
-        getAllComments();
+        // getAllComments();
 
         // Empty out the comment text field
         setCommentValue('');
@@ -78,13 +93,19 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                 <div className='post-header-date'>{date}</div>
             </div>
 
-            <img className='post-image' src={image} alt='workout' />
+            <img className='post-image' src={postImagePreview} alt='workout' />
             <div>
                 <div className='footer-no-comment-input'>
                     {like ? (
-                        <HeartFilled className='like-icon' onClick={handleLikeClick} style={{ color: 'red' }} />
+                        <div style={{display:"flex", alignItems:"center"}}>
+                            <HeartFilled className='like-icon' onClick={handleLikeClick} style={{ color: 'red' }}/>
+                            <p>{likes.length} likes</p>
+                        </div>
                     ) : (
-                        <HeartOutlined className='like-icon' onClick={handleLikeClick} />
+                        <div style={{display:"flex", alignItems:"center"}}>
+                            <HeartOutlined className='like-icon' onClick={handleLikeClick} />
+                            <p>{likes.length} likes</p>
+                        </div>
                     )}
                     <div className='description-container'>
                         <span className='description-username'>{username}</span>
@@ -93,15 +114,14 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                     </div>
                     {allComments === [] ? null : (
                         <>
-                            {viewComments ? (
+                            {showMyComments ? (
                                 <div className='comment-container'>
-                                    {allComments.map((post) => {
-                                        return <Comments username={post.username} comment={post.comment} />;
+                                    {comments.map((post) => {
+                                        return <Comments username={post.username} comment={post.text} />;
                                     })}
                                     <div
                                         onClick={() => {
-                                            setViewComments(false);
-                                            setShowMyComments(true);
+                                            setShowMyComments(false);
                                         }}
                                         className='comment-view-container'>
                                         Hide all comments
@@ -110,26 +130,14 @@ const Posts = ({ id, username, image, date, description, comments }) => {
                             ) : (
                                 <div
                                     onClick={() => {
-                                        setViewComments(true);
-                                        setShowMyComments(false);
+                                        setShowMyComments(true);
                                     }}
                                     className='comment-view-container'>
-                                    View all {allComments.length} comments
+                                    View all {comments.length} comments
                                 </div>
                             )}
                         </>
                     )}
-                    {showMyComments ? (
-                        <>
-                            {myComments !== [] ? (
-                                <>
-                                    {myComments.map((post) => {
-                                        return <Comments username={post.username} comment={post.comment} />;
-                                    })}
-                                </>
-                            ) : null}
-                        </>
-                    ) : null}
                 </div>
                 <div className='comment-input-container'>
                     <div style={{ display: 'flex' }}>

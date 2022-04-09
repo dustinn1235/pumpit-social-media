@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Posts from './Posts';
 import firebase from '../../firebase'
 import { useAuth } from '../../context/AuthContext';
+import { PopperUnstyled } from '@mui/material';
 
 const Home = () => {
     const { currentUser } = useAuth();
@@ -18,7 +19,7 @@ const Home = () => {
                 });
                 setPosts(items);
             })
-    , []);
+    , [postsRef]);
 
     const data = [
         {
@@ -63,7 +64,7 @@ const Home = () => {
     return (
         <div className='home-container'>
             {posts.map((post) => {
-                return <Posts key={post.id} id={post.id} username={post.username} image={post.imgName} date={post.time} description={post.description} comments={post.postComments} />;
+                return <Posts key={post.id} id={post.id} username={post.username} image={post.imgName} date={post.time} description={post.description} comments={post.postComments} likes={post.postLikes}/>;
             })}
         </div>
     );
