@@ -17,9 +17,11 @@ const Home = () => {
                 querySnapshot.forEach((doc) => {
                     items.push({...doc.data(), id:doc.id});
                 });
-                setPosts(items);
+                if(JSON.stringify(items) !== JSON.stringify(posts)){
+                    setPosts(items);
+                }
             })
-    , [postsRef]);
+    , [postsRef, posts]);
 
     const data = [
         {
