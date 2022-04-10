@@ -4,7 +4,6 @@ import Curl from '../images/curl.png';
 import Run from '../images/run.png';
 import Rope from '../images/rope.png';
 import { useHistory } from 'react-router-dom';
-import firebase from '../firebase';
 import { useAuth } from '../context/AuthContext';
 
 const LandingPage = () => {
@@ -17,29 +16,11 @@ const LandingPage = () => {
         history.push('/signup');
     };
 
-    const ref = firebase.firestore().collection('users');
-
-    //Gets live updates from the database ("better way")
-    function getUsers() {
-        ref.onSnapshot((querySnapshot) => {
-            const items = [];
-            querySnapshot.forEach((doc) => {
-                items.push(doc.data());
-            });
-        });
-    }
-
-    //one time get request (needs page reload for update of data)
-    function getUsers2() {
-        ref.get().then((item) => {
-            const items = item.docs.map((doc) => doc.data());
-        });
-    }
-
     useEffect(() => {
         if (currentUser !== null) {
             history.push('/user/home');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

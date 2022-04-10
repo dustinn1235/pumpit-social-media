@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Posts from './Posts';
-import firebase from '../../firebase'
-import { useAuth } from '../../context/AuthContext';
-import { PopperUnstyled } from '@mui/material';
+import firebase from '../../firebase';
 
 const Home = () => {
 
     const { currentUser } = useAuth();
-    // TODO Get this data from the DB
     const [posts, setPosts] = useState([]);
     console.log(posts);
     // Implement a useEffect for the DB call
@@ -23,11 +20,25 @@ const Home = () => {
             }
         })
     }, []);
-
+  
     return (
         <div className='home-container'>
             {posts.map((post) => {
-                return <Posts key={post.id} id={post.id} username={post.username} image={post.imgName} date={post.time} description={post.description} comments={post.postComments} likes={post.postLikes}/>;
+                return (
+                    <Posts
+                        key={post.id}
+                        id={post.id}
+                        username={post.username}
+                        image={post.imgName}
+                        date={post.time}
+                        description={post.description}
+                        comments={post.postComments}
+                        likes={post.postLikes}
+                        reps={post.reps}
+                        sets={post.sets}
+                        workout={post.workoutType}
+                    />
+                );
             })}
         </div>
     );
