@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Posts from './Posts';
 import firebase from '../../firebase';
+import { useAuth } from '../../context/AuthContext';
 
 const Home = () => {
 
