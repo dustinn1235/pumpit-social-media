@@ -3,22 +3,24 @@ import Posts from './Posts';
 import firebase from '../../firebase';
 
 const Home = () => {
-    // TODO Get this data from the DB
-    const [posts, setPosts] = useState([]);
-    const postsRef = firebase.firestore().collection('posts');
-    // Implement a useEffect for the DB call
-    useEffect(
-        () =>
-            postsRef.onSnapshot((querySnapshot) => {
-                const items = [];
-                querySnapshot.forEach((doc) => {
-                    items.push({ ...doc.data(), id: doc.id });
-                });
-                setPosts(items);
-            }),
-        [postsRef],
-    );
 
+    const { currentUser } = useAuth();
+    const [posts, setPosts] = useState([]);
+    console.log(posts);
+    // Implement a useEffect for the DB call
+    useEffect(() => {
+        const postsRef = firebase.firestore().collection('posts');
+        postsRef.onSnapshot((querySnapshot) => {
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                items.push({...doc.data(), id:doc.id});
+            });
+            if(JSON.stringify(items) !== JSON.stringify(posts)){
+                setPosts(items);
+            }
+        })
+    }, []);
+  
     return (
         <div className='home-container'>
             {posts.map((post) => {
