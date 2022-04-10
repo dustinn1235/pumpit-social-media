@@ -95,12 +95,12 @@ const Posts = ({ id, username, image, date, description, comments, likes, reps, 
 
                     <div className='post-header-username'>{username}</div>
                 </div>
-                <div className='post-header-date'>{moment(date).format('YYYY-MM-DD')}</div>
+                <div className='post-header-date'>{moment(date).format('YYYY-MM-DD, h:mm a')}</div>
             </div>
             {postImagePreview ? (
                 <img className='post-image' src={postImagePreview} alt='workout' />
             ) : (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '200px', flexDirection: 'column' }}>
+                <div className='post-image' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px', flexDirection: 'column' }}>
                     <div style={{ display: 'flex' }}>
                         <div style={{ fontSize: '1.5rem', fontFamily: 'Spartan-B', marginRight: '0.5rem' }}>Loading image</div>
                         <PulseLoader size={20} margin={4} color={'var(--button-blue)'} loading={true} />

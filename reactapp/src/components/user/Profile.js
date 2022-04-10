@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProfilePosts from './ProfilePosts';
 import Button from '@mui/material/Button';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { storage } from '../../firebase';
+import firebase from '../../firebase';
 import PulseLoader from 'react-spinners/PulseLoader';
 
 const Profile = () => {
     const { currentUser } = useAuth();
 
+    const [posts, setPosts] = useState([]);
     const [imagePreview, setImagePreview] = useState('');
 
     storage
@@ -25,100 +27,25 @@ const Profile = () => {
             setImagePreview('https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg');
         });
 
-    const history = useHistory();
+    // Implement a useEffect for the DB call
+    useEffect(() => {
+        const postsRef = firebase.firestore().collection('posts');
+        postsRef.onSnapshot((querySnapshot) => {
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                if (doc.data().username === currentUser.displayName) {
+                    items.push({ ...doc.data(), id: doc.id });
+                }
+            });
+            if (JSON.stringify(items) !== JSON.stringify(posts)) {
+                let newestToOldest = items.sort((a, b) => new Date(b.time) - new Date(a.time));
+                setPosts(newestToOldest);
+            }
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    // TODO Get all the posts from the DB for the current user
-    const data = [
-        {
-            id: 1,
-            username: 'johnsmith123',
-            image: 'https://cdn.lifehack.org/wp-content/uploads/2018/03/workout-routines-for-men-1024x768.jpeg',
-            date: '2022-03-13 12:45pm',
-            description: 'This is me working out!',
-            comments: [
-                {
-                    username: 'maryjane123',
-                    comment: 'Wow nice job!',
-                },
-                {
-                    username: 'dougjones123',
-                    comment: 'Very cool!',
-                },
-                {
-                    username: 'dougjones123',
-                    comment: 'Very nice!',
-                },
-            ],
-        },
-        {
-            id: 2,
-            username: 'dougjones123',
-            image: 'https://manofmany.com/wp-content/uploads/2020/05/7-minute-workout.jpg',
-            date: '2022-03-13 12:30pm',
-            description: 'This is me running!',
-            comments: [
-                {
-                    username: 'maryjane123',
-                    comment: 'Wow nice job!',
-                },
-                {
-                    username: 'dougjones123',
-                    comment: 'Very cool!',
-                },
-            ],
-        },
-        {
-            id: 3,
-            username: 'dougjones123',
-            image: 'https://manofmany.com/wp-content/uploads/2020/05/7-minute-workout.jpg',
-            date: '2022-03-13 12:30pm',
-            description: 'This is me running!',
-            comments: [
-                {
-                    username: 'maryjane123',
-                    comment: 'Wow nice job!',
-                },
-                {
-                    username: 'dougjones123',
-                    comment: 'Very cool!',
-                },
-            ],
-        },
-        {
-            id: 4,
-            username: 'dougjones123',
-            image: 'https://manofmany.com/wp-content/uploads/2020/05/7-minute-workout.jpg',
-            date: '2022-03-13 12:30pm',
-            description: 'This is me running!',
-            comments: [
-                {
-                    username: 'maryjane123',
-                    comment: 'Wow nice job!',
-                },
-                {
-                    username: 'dougjones123',
-                    comment: 'Very cool!',
-                },
-            ],
-        },
-        {
-            id: 5,
-            username: 'dougjones123',
-            image: 'https://manofmany.com/wp-content/uploads/2020/05/7-minute-workout.jpg',
-            date: '2022-03-13 12:30pm',
-            description: 'This is me running!',
-            comments: [
-                {
-                    username: 'maryjane123',
-                    comment: 'Wow nice job!',
-                },
-                {
-                    username: 'dougjones123',
-                    comment: 'Very cool!',
-                },
-            ],
-        },
-    ];
+    const history = useHistory();
 
     const handleEditProfileClick = () => {
         history.push('/user/editprofile');
@@ -156,8 +83,8 @@ const Profile = () => {
                 </div>
                 <hr style={{ width: '100%', margin: '2rem 0' }} />
                 <div className='profile-posts-container'>
-                    {data.map((post) => {
-                        return <ProfilePosts key={post.id} image={post.image} />;
+                    {posts.map((post) => {
+                        return <ProfilePosts key={post.id} image={post.imgName} />;
                     })}
                 </div>
             </div>
