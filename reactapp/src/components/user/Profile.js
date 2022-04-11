@@ -53,7 +53,7 @@ const Profile = () => {
 
     return (
         <div className='profile-container'>
-            <div className='card-container'>
+            <div className='card-container profile-card-container'>
                 <div className='upper-card-container'>
                     {imagePreview ? (
                         <img className='profile-avatar-image' src={imagePreview} alt='avatar' />
@@ -82,11 +82,31 @@ const Profile = () => {
                     </div>
                 </div>
                 <hr style={{ width: '100%', margin: '2rem 0' }} />
-                <div className='profile-posts-container'>
-                    {posts.map((post) => {
-                        return <ProfilePosts key={post.id} image={post.imgName} />;
-                    })}
-                </div>
+                {posts.length === 0 ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem auto' }}>
+                        <div style={{ fontSize: '1.5rem', marginBottom: '1rem', textAlign: 'center' }}>You don't have any posts yet</div>
+                        <Button
+                            onClick={handleEditProfileClick}
+                            style={{
+                                textTransform: 'none',
+                                borderRadius: '500px',
+                                padding: '0.5rem 1rem',
+                                backgroundColor: 'var(--button-blue)',
+                                color: 'white',
+                                fontFamily: 'Spartan-B',
+                                fontSize: '1rem',
+                            }}
+                            variant='contained'>
+                            Upload Here
+                        </Button>
+                    </div>
+                ) : (
+                    <div className='profile-posts-container'>
+                        {posts.map((post) => {
+                            return <ProfilePosts key={post.id} image={post.imgName} />;
+                        })}
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -112,28 +112,41 @@ const Posts = ({ id, username, image, date, description, comments, likes, reps, 
             <div>
                 <div className='footer-no-comment-input'>
                     {like ? (
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <HeartFilled className='like-icon' onClick={handleLikeClick} style={{ color: 'red' }} />
-                            {likes.length === 1 ? <p style={{ marginLeft: '0.5rem' }}>{likes.length} like</p> : <p style={{ marginLeft: '0.5rem' }}>{likes.length} likes</p>}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <HeartFilled className='like-icon' onClick={handleLikeClick} style={{ color: 'red' }} />
+                                {likes.length === 1 ? <p style={{ marginLeft: '0.5rem' }}>{likes.length} like</p> : <p style={{ marginLeft: '0.5rem' }}>{likes.length} likes</p>}
+                            </div>
+                            {sets === '1' ? (
+                                <span className='description-sets-reps'>
+                                    {workout.charAt(0).toUpperCase() + workout.slice(1)}, {sets} set of {reps}
+                                </span>
+                            ) : (
+                                <span className='description-sets-reps'>
+                                    {workout.charAt(0).toUpperCase() + workout.slice(1)}, {sets} sets of {reps}
+                                </span>
+                            )}
                         </div>
                     ) : (
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <HeartOutlined className='like-icon' onClick={handleLikeClick} />
-                            {likes.length === 1 ? <p style={{ marginLeft: '0.5rem' }}>{likes.length} like</p> : <p style={{ marginLeft: '0.5rem' }}>{likes.length} likes</p>}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <HeartOutlined className='like-icon' onClick={handleLikeClick} />
+                                {likes.length === 1 ? <p style={{ marginLeft: '0.5rem' }}>{likes.length} like</p> : <p style={{ marginLeft: '0.5rem' }}>{likes.length} likes</p>}
+                            </div>
+                            {sets === '1' ? (
+                                <span className='description-sets-reps'>
+                                    {workout.charAt(0).toUpperCase() + workout.slice(1)}, {sets} set of {reps}
+                                </span>
+                            ) : (
+                                <span className='description-sets-reps'>
+                                    {workout.charAt(0).toUpperCase() + workout.slice(1)}, {sets} sets of {reps}
+                                </span>
+                            )}
                         </div>
                     )}
                     <div className='description-container'>
                         <span className='description-username'>{username}</span>
                         <span>{description}</span>
-                        {sets === '1' ? (
-                            <span className='description-sets-reps'>
-                                {workout.charAt(0).toUpperCase() + workout.slice(1)}, {sets} set of {reps}
-                            </span>
-                        ) : (
-                            <span className='description-sets-reps'>
-                                {workout.charAt(0).toUpperCase() + workout.slice(1)}, {sets} sets of {reps}
-                            </span>
-                        )}
                     </div>
                     {showMyComments ? (
                         <div className='comment-container'>
