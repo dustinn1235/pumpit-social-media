@@ -51,6 +51,10 @@ const Profile = () => {
         history.push('/user/editprofile');
     };
 
+    const handleUploadPostClick = () => {
+        history.push('/user/post');
+    };
+
     return (
         <div className='profile-container'>
             <div className='card-container profile-card-container'>
@@ -86,7 +90,7 @@ const Profile = () => {
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem auto' }}>
                         <div style={{ fontSize: '1.5rem', marginBottom: '1rem', textAlign: 'center' }}>You don't have any posts yet</div>
                         <Button
-                            onClick={handleEditProfileClick}
+                            onClick={handleUploadPostClick}
                             style={{
                                 textTransform: 'none',
                                 borderRadius: '500px',

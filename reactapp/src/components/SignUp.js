@@ -64,7 +64,7 @@ const SignUp = () => {
             await signup(values.email, values.username, values.password);
             history.push('/user/home');
         } catch (err) {
-            setError("The email address is already in use.");
+            setError('The email address is already in use.');
         }
         setLoading(false);
     };
@@ -94,7 +94,7 @@ const SignUp = () => {
 
                     <Tooltip
                         open={!validPassword && values.password !== ''}
-                        placement={'right'}
+                        placement={'bottom'}
                         title='Minimum eight characters, one lowercase, one uppercase, at least one number, and at least one special character'>
                         <FormControl style={{ marginTop: '2rem' }} variant='outlined'>
                             <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
