@@ -15,7 +15,7 @@ https://workout-db-b444f.web.app/
 https://workout-db-b444f.firebaseapp.com/ 
 
 ## Project snapshots
-![image](https://user-images.githubusercontent.com/60798675/234192353-d261e5e9-608b-4f43-8bb7-4db16e9f97a5.png)
+![image](https://github.com/dustinn1235/pumpit-social-media/assets/60798675/1c234ca8-1be1-4131-b4a1-682dfaeb8b6f)
 ![image](https://user-images.githubusercontent.com/60798675/234192244-50ad7923-143f-46c0-99eb-95070282ebf0.png)
 ![image](https://user-images.githubusercontent.com/60798675/234191917-3d9302e7-b885-4abc-84a2-c65e842c05a8.png)
 ![image](https://user-images.githubusercontent.com/60798675/234191983-6279b6e3-f7e4-4c1c-912a-67ec41d3f4b4.png)
